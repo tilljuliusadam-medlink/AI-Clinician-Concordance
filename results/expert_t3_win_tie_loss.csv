@@ -1,0 +1,5 @@
+endpoint,stratum,num_patients,n_ratings,p_ai_higher,p_tie,p_clinician_higher,win_probability,ci95,bootstrap_method
+treatment,discordant_bad_outcome,240,480,0.3063,0.4313,0.2625,0.5219,0.486 to 0.560,bca
+treatment,high_concordance_no_bad_outcome,60,120,0.2333,0.4417,0.325,0.4542,0.388 to 0.512,bca
+diagnostic,discordant_bad_outcome,240,480,0.2979,0.4479,0.2542,0.5219,0.489 to 0.556,bca
+diagnostic,high_concordance_no_bad_outcome,60,120,0.2583,0.3667,0.375,0.4417,0.367 to 0.517,bca

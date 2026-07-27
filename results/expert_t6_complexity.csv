@@ -1,0 +1,5 @@
+endpoint,stratum,num_patients,n_ratings,mean_difference_at_complexity_0,se_intercept,complexity_slope,se_slope,vc_case,vc_reviewer,converged
+treatment,discordant_bad_outcome,240,480,0.1005,0.1215,-0.0175,0.0576,0.0871,0.0019,True
+treatment,high_concordance_no_bad_outcome,60,120,-0.2482,0.2256,0.0904,0.1094,0.0,0.0,True
+diagnostic,discordant_bad_outcome,240,480,-0.0192,0.1305,0.0372,0.058,0.1292,0.0228,True
+diagnostic,high_concordance_no_bad_outcome,60,120,0.159,0.2327,-0.1482,0.1129,0.1364,0.0,True

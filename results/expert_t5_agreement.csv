@@ -1,0 +1,9 @@
+endpoint,rated_plan,coefficient,num_patients,estimate,ci95,bootstrap_method
+treatment,clinician,Krippendorff alpha,300,0.2372,0.131 to 0.339,bca
+treatment,clinician,Gwet AC2,300,0.6891,0.640 to 0.734,bca
+treatment,ai,Krippendorff alpha,300,0.333,0.232 to 0.432,bca
+treatment,ai,Gwet AC2,300,0.713,0.665 to 0.755,bca
+diagnostic,clinician,Krippendorff alpha,300,0.2709,0.171 to 0.378,bca
+diagnostic,clinician,Gwet AC2,300,0.7023,0.653 to 0.743,bca
+diagnostic,ai,Krippendorff alpha,300,0.3364,0.236 to 0.437,bca
+diagnostic,ai,Gwet AC2,300,0.7067,0.655 to 0.747,bca
