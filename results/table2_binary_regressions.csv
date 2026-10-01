@@ -1,0 +1,188 @@
+Block,Tables,Metric,Domain,Outcome,num_patients,num_clinicians,"Without outcome, n (%)","With outcome, n (%)",OR (95% CI),E (CI),Clinician intercept SD,p,p (BH)
+f1_main,Tables 2-3,f1,Acute care,Psychiatric ER visit/hospitalization,2260,80,1984 (87.8%),276 (12.2%),"0.43 (0.18, 1.01)",4.09 (1.00),0.214,0.052,0.128
+f1_main,Tables 2-3,f1,Acute care,Psychiatric ER visit,2260,80,2105 (93.1%),155 (6.9%),"0.36 (0.12, 1.04)",5.05 (1.00),0.299,0.060,0.129
+f1_main,Tables 2-3,f1,Acute care,Psychiatric hospitalization,2260,80,2126 (94.1%),134 (5.9%),"0.70 (0.21, 2.36)",2.21 (1.00),0.008,0.566,0.738
+f1_main,Tables 2-3,f1,Acute care,Medical ER visit/hospitalization,2260,80,1572 (69.6%),688 (30.4%),"0.42 (0.22, 0.81)",2.44 (1.46),0.397,0.010,0.072
+f1_main,Tables 2-3,f1,Acute care,Medical ER visit,2260,80,1733 (76.7%),527 (23.3%),"0.81 (0.40, 1.68)",1.45 (1.00),0.367,0.577,0.738
+f1_main,Tables 2-3,f1,Acute care,Medical hospitalization,2260,80,2016 (89.2%),244 (10.8%),"0.31 (0.13, 0.78)",5.81 (1.87),0.521,0.013,0.072
+f1_main,Tables 2-3,f1,Acute care,Any ER visit/hospitalization,2260,80,1387 (61.4%),873 (38.6%),"0.37 (0.20, 0.68)",2.68 (1.72),0.458,0.001,0.044
+f1_main,Tables 2-3,f1,Acute care,Any ER visit,2260,80,1614 (71.4%),646 (28.6%),"0.54 (0.28, 1.05)",2.06 (1.00),0.413,0.069,0.129
+f1_main,Tables 2-3,f1,Acute care,Any hospitalization,2260,80,1899 (84.0%),361 (16.0%),"0.43 (0.20, 0.92)",2.44 (1.25),0.396,0.030,0.094
+f1_main,Tables 2-3,f1,Suicidality,Onset of suicidal thoughts/behaviors,1908,80,1706 (89.4%),202 (10.6%),"0.44 (0.17, 1.15)",3.97 (1.00),0.173,0.093,0.166
+f1_main,Tables 2-3,f1,Suicidality,Onset of suicidal thoughts,2044,80,1897 (92.8%),147 (7.2%),"0.36 (0.12, 1.05)",5.07 (1.00),0.172,0.062,0.129
+f1_main,Tables 2-3,f1,Suicidality,Onset of suicidal behaviors,2086,80,2001 (95.9%),85 (4.1%),"0.62 (0.14, 2.76)",2.58 (1.00),0.544,0.535,0.738
+f1_main,Tables 2-3,f1,Suicidality,Remission of suicidal thoughts/behaviors,352,76,172 (48.9%),180 (51.1%),"0.84 (0.18, 3.98)",1.41 (1.00),0.408,0.826,0.943
+f1_main,Tables 2-3,f1,Suicidality,Remission of suicidal thoughts,216,70,94 (43.5%),122 (56.5%),"1.17 (0.11, 12.79)",1.38 (1.00),1.039,0.896,0.959
+f1_main,Tables 2-3,f1,Suicidality,Remission of suicidal behaviors,174,63,70 (40.2%),104 (59.8%),"0.90 (0.09, 9.25)",1.29 (1.00),0.006,0.929,0.959
+f1_main,Tables 2-3,f1,Engagement,Psychotropic medication nonadherence,2260,80,1775 (78.5%),485 (21.5%),"0.74 (0.35, 1.53)",1.61 (1.00),0.477,0.411,0.598
+f1_main,Tables 2-3,f1,Engagement,Psychiatric appointment no-show,2260,80,1665 (73.7%),595 (26.3%),"0.91 (0.48, 1.72)",1.28 (1.00),0.111,0.765,0.907
+f1_main,Tables 2-3,f1,Mortality,All-cause mortality,2260,80,2146 (95.0%),114 (5.0%),"1.96 (0.47, 8.28)",3.34 (1.00),0.134,0.359,0.547
+f1_main,Tables 2-3,f1,Composite,Any of 4 negative outcomes,2260,80,1107 (49.0%),1153 (51.0%),"0.49 (0.27, 0.88)",2.21 (1.33),0.489,0.018,0.072
+f1_main,Tables 2-3,f1,Composite,Any of 6 negative outcomes,2260,80,690 (30.5%),1570 (69.5%),"0.55 (0.29, 1.05)",2.04 (1.00),0.533,0.068,0.129
+smi,Supplementary Tables 1-2,f1,Acute care,Psychiatric ER visit/hospitalization,1285,80,1105 (86.0%),180 (14.0%),"0.31 (0.11, 0.88)",5.97 (1.52),0.305,0.028,0.456
+smi,Supplementary Tables 1-2,f1,Acute care,Psychiatric ER visit,1285,80,1186 (92.3%),99 (7.7%),"0.19 (0.05, 0.74)",9.75 (2.06),0.481,0.016,0.456
+smi,Supplementary Tables 1-2,f1,Acute care,Psychiatric hospitalization,1285,80,1196 (93.1%),89 (6.9%),"0.71 (0.15, 3.22)",2.18 (1.00),0.254,0.653,0.990
+smi,Supplementary Tables 1-2,f1,Acute care,Medical ER visit/hospitalization,1285,80,889 (69.2%),396 (30.8%),"0.99 (0.41, 2.39)",1.06 (1.00),0.298,0.990,0.990
+smi,Supplementary Tables 1-2,f1,Acute care,Medical ER visit,1285,80,982 (76.4%),303 (23.6%),"1.14 (0.44, 2.96)",1.33 (1.00),0.245,0.792,0.990
+smi,Supplementary Tables 1-2,f1,Acute care,Medical hospitalization,1285,80,1146 (89.2%),139 (10.8%),"0.94 (0.25, 3.48)",1.33 (1.00),0.516,0.924,0.990
+smi,Supplementary Tables 1-2,f1,Acute care,Any ER visit/hospitalization,1285,80,771 (60.0%),514 (40.0%),"0.58 (0.26, 1.32)",1.94 (1.00),0.461,0.198,0.990
+smi,Supplementary Tables 1-2,f1,Acute care,Any ER visit,1285,80,907 (70.6%),378 (29.4%),"0.55 (0.23, 1.32)",2.02 (1.00),0.402,0.183,0.990
+smi,Supplementary Tables 1-2,f1,Acute care,Any hospitalization,1285,80,1069 (83.2%),216 (16.8%),"0.80 (0.28, 2.31)",1.47 (1.00),0.464,0.685,0.990
+smi,Supplementary Tables 1-2,f1,Suicidality,Onset of suicidal thoughts/behaviors,1064,80,950 (89.3%),114 (10.7%),"0.70 (0.19, 2.62)",2.20 (1.00),0.208,0.599,0.990
+smi,Supplementary Tables 1-2,f1,Suicidality,Onset of suicidal thoughts,1141,80,1060 (92.9%),81 (7.1%),"0.47 (0.10, 2.21)",3.66 (1.00),0.165,0.340,0.990
+smi,Supplementary Tables 1-2,f1,Suicidality,Onset of suicidal behaviors,1180,80,1130 (95.8%),50 (4.2%),"1.51 (0.20, 11.70)",2.40 (1.00),0.546,0.691,0.990
+smi,Supplementary Tables 1-2,f1,Suicidality,Remission of suicidal thoughts/behaviors,221,66,104 (47.1%),117 (52.9%),"1.03 (0.13, 7.99)",1.15 (1.00),0.298,0.975,0.990
+smi,Supplementary Tables 1-2,f1,Suicidality,Remission of suicidal thoughts,144,60,63 (43.8%),81 (56.2%),"1.08 (0.06, 18.66)",1.24 (1.00),0.692,0.959,0.990
+smi,Supplementary Tables 1-2,f1,Suicidality,Remission of suicidal behaviors,105,51,39 (37.1%),66 (62.9%),"1.05 (0.05, 22.08)",1.19 (1.00),0.006,0.973,0.990
+smi,Supplementary Tables 1-2,f1,Engagement,Psychotropic medication nonadherence,1285,80,996 (77.5%),289 (22.5%),"0.76 (0.28, 2.05)",1.55 (1.00),0.555,0.590,0.990
+smi,Supplementary Tables 1-2,f1,Engagement,Psychiatric appointment no-show,1285,80,946 (73.6%),339 (26.4%),"0.79 (0.33, 1.87)",1.50 (1.00),0.222,0.591,0.990
+smi,Supplementary Tables 1-2,f1,Mortality,All-cause mortality,1285,80,1213 (94.4%),72 (5.6%),"1.95 (0.32, 12.07)",3.31 (1.00),0.110,0.472,0.990
+smi,Supplementary Tables 1-2,f1,Composite,Any of 4 negative outcomes,1285,80,609 (47.4%),676 (52.6%),"0.79 (0.36, 1.75)",1.49 (1.00),0.496,0.569,0.990
+smi,Supplementary Tables 1-2,f1,Composite,Any of 6 negative outcomes,1285,80,370 (28.8%),915 (71.2%),"0.58 (0.24, 1.40)",1.94 (1.00),0.552,0.227,0.990
+smi_plus1,Supplementary Tables 3-4,f1,Acute care,Psychiatric ER visit/hospitalization,1110,80,950 (85.6%),160 (14.4%),"0.31 (0.10, 0.97)",5.90 (1.22),0.372,0.044,0.566
+smi_plus1,Supplementary Tables 3-4,f1,Acute care,Medical ER visit/hospitalization,1110,80,771 (69.5%),339 (30.5%),"1.74 (0.66, 4.58)",1.97 (1.00),0.213,0.259,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Acute care,Any ER visit/hospitalization,1110,80,664 (59.8%),446 (40.2%),"0.92 (0.38, 2.23)",1.26 (1.00),0.442,0.846,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Suicidality,Onset of suicidal thoughts/behaviors,915,80,814 (89.0%),101 (11.0%),"0.61 (0.15, 2.53)",2.64 (1.00),0.214,0.500,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Suicidality,Remission of suicidal thoughts/behaviors,195,64,95 (48.7%),100 (51.3%),"0.61 (0.06, 6.33)",1.88 (1.00),0.616,0.679,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Engagement,Psychotropic medication nonadherence,1110,80,856 (77.1%),254 (22.9%),"0.65 (0.22, 1.87)",1.79 (1.00),0.575,0.422,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Mortality,All-cause mortality,1110,80,1051 (94.7%),59 (5.3%),"1.31 (0.17, 10.01)",1.95 (1.00),0.012,0.792,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Composite,Any of 4 negative outcomes,1110,80,523 (47.1%),587 (52.9%),"1.20 (0.50, 2.85)",1.42 (1.00),0.514,0.682,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Composite,Any of 6 negative outcomes,1110,80,317 (28.6%),793 (71.4%),"0.81 (0.31, 2.11)",1.46 (1.00),0.568,0.672,0.941
+smi_plus2,Supplementary Tables 5-6,f1,Acute care,Psychiatric ER visit/hospitalization,618,78,519 (84.0%),99 (16.0%),"0.38 (0.07, 1.96)",2.64 (1.00),0.633,0.246,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Acute care,Medical ER visit/hospitalization,618,78,441 (71.4%),177 (28.6%),"3.23 (0.70, 14.86)",2.99 (1.00),0.545,0.132,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Acute care,Any ER visit/hospitalization,618,78,374 (60.5%),244 (39.5%),"1.04 (0.27, 3.98)",1.17 (1.00),0.672,0.952,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Suicidality,Onset of suicidal thoughts/behaviors,499,76,434 (87.0%),65 (13.0%),"0.64 (0.10, 4.01)",2.50 (1.00),0.012,0.633,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Suicidality,Remission of suicidal thoughts/behaviors,119,51,58 (48.7%),61 (51.3%),"2.54 (0.13, 50.11)",2.57 (1.00),0.011,0.539,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Engagement,Psychotropic medication nonadherence,618,78,467 (75.6%),151 (24.4%),"0.54 (0.12, 2.36)",2.06 (1.00),0.459,0.413,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Mortality,All-cause mortality,618,78,580 (93.9%),38 (6.1%),"1.97 (0.14, 27.02)",3.34 (1.00),0.008,0.613,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Composite,Any of 4 negative outcomes,618,78,286 (46.3%),332 (53.7%),"1.93 (0.54, 6.95)",2.13 (1.00),0.695,0.313,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Composite,Any of 6 negative outcomes,618,78,166 (26.9%),452 (73.1%),"1.25 (0.30, 5.18)",1.48 (1.00),0.675,0.755,0.952
+smi_acute,Supplementary Tables 7-8,f1,Acute care,Psychiatric ER visit/hospitalization,554,78,449 (81.0%),105 (19.0%),"0.09 (0.02, 0.41)",5.97 (2.49),0.080,0.002,0.022
+smi_acute,Supplementary Tables 7-8,f1,Acute care,Medical ER visit/hospitalization,554,78,331 (59.7%),223 (40.3%),"1.67 (0.45, 6.16)",1.91 (1.00),0.156,0.439,0.568
+smi_acute,Supplementary Tables 7-8,f1,Acute care,Any ER visit/hospitalization,554,78,270 (48.7%),284 (51.3%),"0.55 (0.16, 1.83)",2.04 (1.00),0.014,0.327,0.568
+smi_acute,Supplementary Tables 7-8,f1,Suicidality,Onset of suicidal thoughts/behaviors,467,78,418 (89.5%),49 (10.5%),"0.46 (0.06, 3.61)",3.77 (1.00),1.000,0.460,0.568
+smi_acute,Supplementary Tables 7-8,f1,Suicidality,Remission of suicidal thoughts/behaviors,87,49,37 (42.5%),50 (57.5%),"3.63 (0.07, 186.55)",3.22 (1.00),0.006,0.521,0.568
+smi_acute,Supplementary Tables 7-8,f1,Engagement,Psychotropic medication nonadherence,554,78,428 (77.3%),126 (22.7%),"0.60 (0.12, 2.93)",1.91 (1.00),0.552,0.524,0.568
+smi_acute,Supplementary Tables 7-8,f1,Mortality,All-cause mortality,554,78,521 (94.0%),33 (6.0%),"2.59 (0.15, 43.91)",4.61 (1.00),0.400,0.511,0.568
+smi_acute,Supplementary Tables 7-8,f1,Composite,Any of 4 negative outcomes,554,78,211 (38.1%),343 (61.9%),"0.41 (0.11, 1.47)",2.50 (1.00),0.400,0.172,0.557
+smi_acute,Supplementary Tables 7-8,f1,Composite,Any of 6 negative outcomes,554,78,130 (23.5%),424 (76.5%),"0.35 (0.08, 1.53)",2.76 (1.00),0.470,0.164,0.557
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Psychiatric ER visit/hospitalization,2098,80,1838 (87.6%),260 (12.4%),"0.46 (0.19, 1.12)",3.76 (1.00),0.221,0.086,0.184
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Psychiatric ER visit,2098,80,1953 (93.1%),145 (6.9%),"0.39 (0.13, 1.21)",4.52 (1.00),0.283,0.103,0.197
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Psychiatric hospitalization,2098,80,1971 (93.9%),127 (6.1%),"0.71 (0.21, 2.48)",2.15 (1.00),0.074,0.597,0.707
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Medical ER visit/hospitalization,2098,80,1469 (70.0%),629 (30.0%),"0.42 (0.21, 0.83)",2.46 (1.43),0.386,0.012,0.098
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Medical ER visit,2098,80,1619 (77.2%),479 (22.8%),"0.68 (0.32, 1.45)",1.71 (1.00),0.345,0.321,0.514
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Medical hospitalization,2098,80,1874 (89.3%),224 (10.7%),"0.40 (0.15, 1.04)",4.45 (1.00),0.497,0.061,0.149
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Any ER visit/hospitalization,2098,80,1295 (61.7%),803 (38.3%),"0.37 (0.20, 0.70)",2.66 (1.67),0.459,0.002,0.077
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Any ER visit,2098,80,1506 (71.8%),592 (28.2%),"0.46 (0.23, 0.92)",2.30 (1.25),0.423,0.029,0.120
+primary_psychiatric,Supplementary Tables 9-10,f1,Acute care,Any hospitalization,2098,80,1764 (84.1%),334 (15.9%),"0.52 (0.23, 1.17)",2.11 (1.00),0.386,0.116,0.207
+primary_psychiatric,Supplementary Tables 9-10,f1,Suicidality,Onset of suicidal thoughts/behaviors,1771,80,1582 (89.3%),189 (10.7%),"0.40 (0.15, 1.07)",4.50 (1.00),0.031,0.067,0.152
+primary_psychiatric,Supplementary Tables 9-10,f1,Suicidality,Onset of suicidal thoughts,1896,80,1755 (92.6%),141 (7.4%),"0.30 (0.10, 0.91)",6.11 (1.43),0.061,0.033,0.120
+primary_psychiatric,Supplementary Tables 9-10,f1,Suicidality,Onset of suicidal behaviors,1936,80,1859 (96.0%),77 (4.0%),"0.64 (0.13, 3.03)",2.52 (1.00),0.503,0.571,0.707
+primary_psychiatric,Supplementary Tables 9-10,f1,Suicidality,Remission of suicidal thoughts/behaviors,327,74,158 (48.3%),169 (51.7%),"1.09 (0.21, 5.57)",1.25 (1.00),0.510,0.920,0.950
+primary_psychiatric,Supplementary Tables 9-10,f1,Suicidality,Remission of suicidal thoughts,202,67,85 (42.1%),117 (57.9%),"1.48 (0.12, 18.61)",1.73 (1.00),1.129,0.762,0.842
+primary_psychiatric,Supplementary Tables 9-10,f1,Suicidality,Remission of suicidal behaviors,162,61,65 (40.1%),97 (59.9%),"1.08 (0.10, 12.22)",1.24 (1.00),0.010,0.950,0.950
+primary_psychiatric,Supplementary Tables 9-10,f1,Engagement,Psychotropic medication nonadherence,2098,80,1647 (78.5%),451 (21.5%),"0.80 (0.37, 1.73)",1.47 (1.00),0.473,0.576,0.707
+primary_psychiatric,Supplementary Tables 9-10,f1,Engagement,Psychiatric appointment no-show,2098,80,1555 (74.1%),543 (25.9%),"0.90 (0.46, 1.76)",1.29 (1.00),0.126,0.763,0.842
+primary_psychiatric,Supplementary Tables 9-10,f1,Mortality,All-cause mortality,2098,80,1989 (94.8%),109 (5.2%),"1.85 (0.42, 8.15)",3.10 (1.00),0.187,0.418,0.637
+primary_psychiatric,Supplementary Tables 9-10,f1,Composite,Any of 4 negative outcomes,2098,80,1032 (49.2%),1066 (50.8%),"0.49 (0.26, 0.90)",2.22 (1.29),0.484,0.021,0.120
+primary_psychiatric,Supplementary Tables 9-10,f1,Composite,Any of 6 negative outcomes,2098,80,649 (30.9%),1449 (69.1%),"0.53 (0.27, 1.02)",2.10 (1.00),0.522,0.059,0.149
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Psychiatric ER visit/hospitalization,1327,80,1180 (88.9%),147 (11.1%),"0.25 (0.08, 0.81)",7.46 (1.79),0.313,0.020,0.130
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Psychiatric ER visit,1327,80,1240 (93.4%),87 (6.6%),"0.22 (0.05, 0.96)",8.37 (1.26),0.293,0.044,0.200
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Psychiatric hospitalization,1327,80,1256 (94.6%),71 (5.4%),"0.37 (0.07, 1.99)",4.82 (1.00),0.134,0.247,0.360
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Medical ER visit/hospitalization,1327,80,923 (69.6%),404 (30.4%),"0.53 (0.22, 1.25)",2.10 (1.00),0.365,0.146,0.260
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Medical ER visit,1327,80,1018 (76.7%),309 (23.3%),"0.82 (0.32, 2.11)",1.45 (1.00),0.319,0.675,0.746
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Medical hospitalization,1327,80,1186 (89.4%),141 (10.6%),"0.44 (0.13, 1.48)",4.02 (1.00),0.372,0.183,0.281
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Any ER visit/hospitalization,1327,80,828 (62.4%),499 (37.6%),"0.34 (0.15, 0.77)",2.80 (1.53),0.468,0.010,0.080
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Any ER visit,1327,80,952 (71.7%),375 (28.3%),"0.52 (0.22, 1.25)",2.12 (1.00),0.362,0.144,0.260
+primary_medical,Supplementary Tables 11-12,f1,Acute care,Any hospitalization,1327,80,1126 (84.9%),201 (15.1%),"0.48 (0.17, 1.38)",2.24 (1.00),0.352,0.173,0.281
+primary_medical,Supplementary Tables 11-12,f1,Suicidality,Onset of suicidal thoughts/behaviors,1123,80,1013 (90.2%),110 (9.8%),"0.41 (0.11, 1.53)",4.28 (1.00),0.351,0.185,0.281
+primary_medical,Supplementary Tables 11-12,f1,Suicidality,Onset of suicidal thoughts,1202,80,1125 (93.6%),77 (6.4%),"0.29 (0.06, 1.29)",6.39 (1.00),0.336,0.104,0.255
+primary_medical,Supplementary Tables 11-12,f1,Suicidality,Onset of suicidal behaviors,1223,80,1169 (95.6%),54 (4.4%),"0.61 (0.10, 3.85)",2.66 (1.00),0.763,0.599,0.737
+primary_medical,Supplementary Tables 11-12,f1,Suicidality,Remission of suicidal thoughts/behaviors,204,68,108 (52.9%),96 (47.1%),"0.42 (0.04, 4.15)",2.45 (1.00),0.658,0.459,0.599
+primary_medical,Supplementary Tables 11-12,f1,Suicidality,Remission of suicidal thoughts,125,61,57 (45.6%),68 (54.4%),"1.18 (0.04, 39.66)",1.40 (1.00),0.965,0.925,0.954
+primary_medical,Supplementary Tables 11-12,f1,Suicidality,Remission of suicidal behaviors,104,52,45 (43.3%),59 (56.7%),"0.93 (0.03, 25.94)",1.24 (1.00),0.543,0.964,0.964
+primary_medical,Supplementary Tables 11-12,f1,Engagement,Psychotropic medication nonadherence,1327,80,1032 (77.8%),295 (22.2%),"0.81 (0.30, 2.16)",1.46 (1.00),0.485,0.676,0.746
+primary_medical,Supplementary Tables 11-12,f1,Engagement,Psychiatric appointment no-show,1327,80,970 (73.1%),357 (26.9%),"0.73 (0.32, 1.70)",1.61 (1.00),0.010,0.468,0.599
+primary_medical,Supplementary Tables 11-12,f1,Mortality,All-cause mortality,1327,80,1259 (94.9%),68 (5.1%),"1.56 (0.24, 10.12)",2.50 (1.00),0.012,0.640,0.746
+primary_medical,Supplementary Tables 11-12,f1,Composite,Any of 4 negative outcomes,1327,80,665 (50.1%),662 (49.9%),"0.50 (0.23, 1.09)",2.17 (1.00),0.492,0.082,0.228
+primary_medical,Supplementary Tables 11-12,f1,Composite,Any of 6 negative outcomes,1327,80,406 (30.6%),921 (69.4%),"0.47 (0.20, 1.10)",2.27 (1.00),0.532,0.084,0.228
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Psychiatric ER visit/hospitalization,3000,80,2613 (87.1%),387 (12.9%),"0.50 (0.21, 1.23)",3.38 (1.00),0.303,0.132,0.264
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Psychiatric ER visit,3000,80,2784 (92.8%),216 (7.2%),"0.42 (0.14, 1.26)",4.19 (1.00),0.268,0.123,0.262
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Psychiatric hospitalization,3000,80,2808 (93.6%),192 (6.4%),"0.80 (0.23, 2.76)",1.82 (1.00),0.241,0.721,0.846
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Medical ER visit/hospitalization,3000,80,2078 (69.3%),922 (30.7%),"0.55 (0.27, 1.11)",2.03 (1.00),0.440,0.094,0.231
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Medical ER visit,3000,80,2303 (76.8%),697 (23.2%),"0.82 (0.37, 1.78)",1.45 (1.00),0.451,0.610,0.781
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Medical hospitalization,3000,80,2660 (88.7%),340 (11.3%),"0.25 (0.10, 0.62)",7.43 (2.60),0.381,0.003,0.023
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Any ER visit/hospitalization,3000,80,1831 (61.0%),1169 (39.0%),"0.50 (0.26, 0.96)",2.19 (1.16),0.456,0.038,0.102
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Any ER visit,3000,80,2143 (71.4%),857 (28.6%),"0.65 (0.32, 1.33)",1.78 (1.00),0.465,0.239,0.379
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Acute care,Any hospitalization,3000,80,2491 (83.0%),509 (17.0%),"0.37 (0.17, 0.82)",2.66 (1.45),0.362,0.014,0.049
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Suicidality,Onset of suicidal thoughts/behaviors,2518,80,2239 (88.9%),279 (11.1%),"0.55 (0.20, 1.52)",3.05 (1.00),0.261,0.249,0.379
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Suicidality,Onset of suicidal thoughts,2705,80,2501 (92.5%),204 (7.5%),"0.52 (0.17, 1.63)",3.24 (1.00),0.306,0.264,0.384
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Suicidality,Onset of suicidal behaviors,2761,80,2647 (95.9%),114 (4.1%),"0.72 (0.15, 3.53)",2.13 (1.00),0.437,0.684,0.841
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Suicidality,Remission of suicidal thoughts/behaviors,482,77,248 (51.5%),234 (48.5%),"1.07 (0.23, 4.91)",1.23 (1.00),0.371,0.927,0.934
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Suicidality,Remission of suicidal thoughts,295,73,140 (47.5%),155 (52.5%),"0.90 (0.09, 9.46)",1.29 (1.00),0.731,0.931,0.934
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Suicidality,Remission of suicidal behaviors,239,66,101 (42.3%),138 (57.7%),"0.92 (0.12, 7.25)",1.26 (1.00),0.076,0.934,0.934
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Engagement,Psychotropic medication nonadherence,3000,80,2350 (78.3%),650 (21.7%),"0.73 (0.33, 1.60)",1.62 (1.00),0.487,0.432,0.576
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Engagement,Psychiatric appointment no-show,3000,80,2194 (73.1%),806 (26.9%),"0.64 (0.32, 1.26)",1.82 (1.00),0.180,0.193,0.325
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Mortality,All-cause mortality,3000,80,2844 (94.8%),156 (5.2%),"1.25 (0.28, 5.61)",1.80 (1.00),0.034,0.774,0.854
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Composite,Any of 4 negative outcomes,3000,80,1447 (48.2%),1553 (51.8%),"0.62 (0.32, 1.18)",1.86 (1.00),0.459,0.144,0.272
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Composite,Any of 6 negative outcomes,3000,80,888 (29.6%),2112 (70.4%),"0.55 (0.27, 1.13)",2.04 (1.00),0.535,0.105,0.240
+pabak,Supplementary Tables 15-16,pabak,Acute care,Psychiatric ER visit/hospitalization,3000,80,2613 (87.1%),387 (12.9%),"0.23 (0.06, 0.90)",8.04 (1.45),0.300,0.035,0.086
+pabak,Supplementary Tables 15-16,pabak,Acute care,Psychiatric ER visit,3000,80,2784 (92.8%),216 (7.2%),"0.18 (0.03, 0.96)",10.68 (1.27),0.266,0.044,0.101
+pabak,Supplementary Tables 15-16,pabak,Acute care,Psychiatric hospitalization,3000,80,2808 (93.6%),192 (6.4%),"0.59 (0.09, 4.01)",2.77 (1.00),0.241,0.592,0.700
+pabak,Supplementary Tables 15-16,pabak,Acute care,Medical ER visit/hospitalization,3000,80,2078 (69.3%),922 (30.7%),"0.26 (0.09, 0.75)",3.34 (1.58),0.441,0.012,0.040
+pabak,Supplementary Tables 15-16,pabak,Acute care,Medical ER visit,3000,80,2303 (76.8%),697 (23.2%),"0.71 (0.22, 2.31)",1.66 (1.00),0.452,0.567,0.698
+pabak,Supplementary Tables 15-16,pabak,Acute care,Medical hospitalization,3000,80,2660 (88.7%),340 (11.3%),"0.08 (0.02, 0.34)",23.69 (5.38),0.382,<0.001,0.005
+pabak,Supplementary Tables 15-16,pabak,Acute care,Any ER visit/hospitalization,3000,80,1831 (61.0%),1169 (39.0%),"0.24 (0.09, 0.65)",3.49 (1.78),0.456,0.005,0.028
+pabak,Supplementary Tables 15-16,pabak,Acute care,Any ER visit,3000,80,2143 (71.4%),857 (28.6%),"0.45 (0.15, 1.32)",2.35 (1.00),0.466,0.147,0.261
+pabak,Supplementary Tables 15-16,pabak,Acute care,Any hospitalization,3000,80,2491 (83.0%),509 (17.0%),"0.17 (0.05, 0.56)",4.32 (2.00),0.362,0.004,0.024
+pabak,Supplementary Tables 15-16,pabak,Suicidality,Onset of suicidal thoughts/behaviors,2518,80,2239 (88.9%),279 (11.1%),"0.33 (0.07, 1.59)",5.47 (1.00),0.257,0.168,0.283
+pabak,Supplementary Tables 15-16,pabak,Suicidality,Onset of suicidal thoughts,2705,80,2501 (92.5%),204 (7.5%),"0.37 (0.06, 2.23)",4.91 (1.00),0.299,0.275,0.440
+pabak,Supplementary Tables 15-16,pabak,Suicidality,Onset of suicidal behaviors,2761,80,2647 (95.9%),114 (4.1%),"0.39 (0.04, 3.92)",4.51 (1.00),0.440,0.427,0.594
+pabak,Supplementary Tables 15-16,pabak,Suicidality,Remission of suicidal thoughts/behaviors,482,77,248 (51.5%),234 (48.5%),"0.62 (0.05, 7.73)",1.86 (1.00),0.372,0.710,0.757
+pabak,Supplementary Tables 15-16,pabak,Suicidality,Remission of suicidal thoughts,295,73,140 (47.5%),155 (52.5%),"1.28 (0.03, 58.69)",1.51 (1.00),0.724,0.900,0.900
+pabak,Supplementary Tables 15-16,pabak,Suicidality,Remission of suicidal behaviors,239,66,101 (42.3%),138 (57.7%),"0.47 (0.01, 18.55)",2.29 (1.00),0.097,0.685,0.756
+pabak,Supplementary Tables 15-16,pabak,Engagement,Psychotropic medication nonadherence,3000,80,2350 (78.3%),650 (21.7%),"0.64 (0.20, 2.08)",1.81 (1.00),0.487,0.456,0.607
+pabak,Supplementary Tables 15-16,pabak,Engagement,Psychiatric appointment no-show,3000,80,2194 (73.1%),806 (26.9%),"0.61 (0.22, 1.73)",1.87 (1.00),0.180,0.355,0.540
+pabak,Supplementary Tables 15-16,pabak,Mortality,All-cause mortality,3000,80,2844 (94.8%),156 (5.2%),"2.83 (0.27, 29.45)",5.11 (1.00),0.030,0.384,0.558
+pabak,Supplementary Tables 15-16,pabak,Composite,Any of 4 negative outcomes,3000,80,1447 (48.2%),1553 (51.8%),"0.38 (0.15, 1.01)",2.61 (1.00),0.459,0.052,0.103
+pabak,Supplementary Tables 15-16,pabak,Composite,Any of 6 negative outcomes,3000,80,888 (29.6%),2112 (70.4%),"0.37 (0.13, 1.06)",2.70 (1.00),0.535,0.064,0.121
+mcc,Supplementary Tables 17-18,mcc,Acute care,Psychiatric ER visit/hospitalization,2364,80,2074 (87.7%),290 (12.3%),"0.56 (0.33, 0.97)",2.94 (1.19),0.203,0.040,0.091
+mcc,Supplementary Tables 17-18,mcc,Acute care,Psychiatric ER visit,2364,80,2201 (93.1%),163 (6.9%),"0.54 (0.27, 1.06)",3.14 (1.00),0.342,0.072,0.128
+mcc,Supplementary Tables 17-18,mcc,Acute care,Psychiatric hospitalization,2364,80,2223 (94.0%),141 (6.0%),"0.68 (0.31, 1.47)",2.30 (1.00),0.013,0.330,0.423
+mcc,Supplementary Tables 17-18,mcc,Acute care,Medical ER visit/hospitalization,2364,80,1646 (69.6%),718 (30.4%),"0.67 (0.44, 1.03)",1.74 (1.00),0.383,0.068,0.128
+mcc,Supplementary Tables 17-18,mcc,Acute care,Medical ER visit,2364,80,1813 (76.7%),551 (23.3%),"0.89 (0.56, 1.42)",1.31 (1.00),0.375,0.628,0.718
+mcc,Supplementary Tables 17-18,mcc,Acute care,Medical hospitalization,2364,80,2105 (89.0%),259 (11.0%),"0.40 (0.22, 0.70)",4.48 (2.19),0.461,0.002,0.011
+mcc,Supplementary Tables 17-18,mcc,Acute care,Any ER visit/hospitalization,2364,80,1450 (61.3%),914 (38.7%),"0.58 (0.39, 0.87)",1.95 (1.35),0.439,0.008,0.029
+mcc,Supplementary Tables 17-18,mcc,Acute care,Any ER visit,2364,80,1688 (71.4%),676 (28.6%),"0.71 (0.46, 1.10)",1.65 (1.00),0.409,0.124,0.202
+mcc,Supplementary Tables 17-18,mcc,Acute care,Any hospitalization,2364,80,1981 (83.8%),383 (16.2%),"0.46 (0.28, 0.75)",2.30 (1.57),0.330,0.002,0.011
+mcc,Supplementary Tables 17-18,mcc,Suicidality,Onset of suicidal thoughts/behaviors,1990,80,1779 (89.4%),211 (10.6%),"0.69 (0.37, 1.30)",2.24 (1.00),0.159,0.250,0.382
+mcc,Supplementary Tables 17-18,mcc,Suicidality,Onset of suicidal thoughts,2138,80,1984 (92.8%),154 (7.2%),"0.69 (0.35, 1.38)",2.25 (1.00),0.139,0.297,0.414
+mcc,Supplementary Tables 17-18,mcc,Suicidality,Onset of suicidal behaviors,2177,80,2089 (96.0%),88 (4.0%),"0.78 (0.28, 2.15)",1.89 (1.00),0.549,0.628,0.718
+mcc,Supplementary Tables 17-18,mcc,Suicidality,Remission of suicidal thoughts/behaviors,374,76,184 (49.2%),190 (50.8%),"1.22 (0.48, 3.11)",1.44 (1.00),0.269,0.683,0.754
+mcc,Supplementary Tables 17-18,mcc,Suicidality,Remission of suicidal thoughts,226,72,99 (43.8%),127 (56.2%),"1.20 (0.26, 5.56)",1.42 (1.00),0.989,0.817,0.872
+mcc,Supplementary Tables 17-18,mcc,Suicidality,Remission of suicidal behaviors,187,63,76 (40.6%),111 (59.4%),"0.98 (0.27, 3.58)",1.10 (1.00),0.010,0.981,0.994
+mcc,Supplementary Tables 17-18,mcc,Engagement,Psychotropic medication nonadherence,2364,80,1851 (78.3%),513 (21.7%),"0.69 (0.43, 1.11)",1.70 (1.00),0.496,0.126,0.202
+mcc,Supplementary Tables 17-18,mcc,Engagement,Psychiatric appointment no-show,2364,80,1735 (73.4%),629 (26.6%),"0.79 (0.52, 1.20)",1.50 (1.00),0.110,0.269,0.391
+mcc,Supplementary Tables 17-18,mcc,Mortality,All-cause mortality,2364,80,2244 (94.9%),120 (5.1%),"1.00 (0.40, 2.51)",1.06 (1.00),0.285,0.994,0.994
+mcc,Supplementary Tables 17-18,mcc,Composite,Any of 4 negative outcomes,2364,80,1157 (48.9%),1207 (51.1%),"0.68 (0.46, 1.01)",1.71 (1.00),0.462,0.056,0.120
+mcc,Supplementary Tables 17-18,mcc,Composite,Any of 6 negative outcomes,2364,80,715 (30.2%),1649 (69.8%),"0.63 (0.40, 0.97)",1.84 (1.14),0.519,0.036,0.090
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Psychiatric ER visit/hospitalization,2260,80,1984 (87.8%),276 (12.2%),"0.95 (0.38, 2.38)",1.28 (1.00),0.549,0.917,0.917
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Psychiatric ER visit,2260,80,2105 (93.1%),155 (6.9%),"0.55 (0.17, 1.77)",3.02 (1.00),0.486,0.318,0.484
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Psychiatric hospitalization,2260,80,2126 (94.1%),134 (5.9%),"1.72 (0.48, 6.16)",2.83 (1.00),0.759,0.407,0.543
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Medical ER visit/hospitalization,2260,80,1572 (69.6%),688 (30.4%),"0.24 (0.12, 0.47)",3.53 (2.29),0.534,<0.001,0.001
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Medical ER visit,2260,80,1733 (76.7%),527 (23.3%),"0.40 (0.19, 0.84)",2.53 (1.40),0.456,0.016,0.064
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Medical hospitalization,2260,80,2016 (89.2%),244 (10.8%),"0.29 (0.11, 0.75)",6.34 (1.98),0.865,0.011,0.051
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Any ER visit/hospitalization,2260,80,1387 (61.4%),873 (38.6%),"0.34 (0.18, 0.64)",2.84 (1.81),0.643,<0.001,0.014
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Any ER visit,2260,80,1614 (71.4%),646 (28.6%),"0.36 (0.18, 0.72)",2.71 (1.63),0.523,0.004,0.032
+us_weighted,Supplementary Tables 20-21,f1,Acute care,Any hospitalization,2260,80,1899 (84.0%),361 (16.0%),"0.59 (0.27, 1.31)",1.93 (1.00),0.745,0.194,0.373
+us_weighted,Supplementary Tables 20-21,f1,Suicidality,Onset of suicidal thoughts/behaviors,1908,80,1706 (89.4%),202 (10.6%),"0.59 (0.21, 1.62)",2.80 (1.00),0.540,0.304,0.484
+us_weighted,Supplementary Tables 20-21,f1,Suicidality,Onset of suicidal thoughts,2044,80,1897 (92.8%),147 (7.2%),"0.35 (0.11, 1.14)",5.11 (1.00),0.573,0.081,0.199
+us_weighted,Supplementary Tables 20-21,f1,Suicidality,Onset of suicidal behaviors,2086,80,2001 (95.9%),85 (4.1%),"0.83 (0.18, 3.78)",1.71 (1.00),0.774,0.806,0.878
+us_weighted,Supplementary Tables 20-21,f1,Suicidality,Remission of suicidal thoughts/behaviors,352,76,172 (48.9%),180 (51.1%),"0.36 (0.07, 1.99)",2.72 (1.00),0.563,0.241,0.428
+us_weighted,Supplementary Tables 20-21,f1,Suicidality,Remission of suicidal thoughts,216,70,94 (43.5%),122 (56.5%),"0.64 (0.04, 9.72)",1.80 (1.00),1.174,0.750,0.878
+us_weighted,Supplementary Tables 20-21,f1,Suicidality,Remission of suicidal behaviors,174,63,70 (40.2%),104 (59.8%),"0.75 (0.06, 9.33)",1.58 (1.00),0.006,0.823,0.878
+us_weighted,Supplementary Tables 20-21,f1,Engagement,Psychotropic medication nonadherence,2260,80,1775 (78.5%),485 (21.5%),"0.82 (0.39, 1.72)",1.44 (1.00),0.665,0.600,0.739
+us_weighted,Supplementary Tables 20-21,f1,Engagement,Psychiatric appointment no-show,2260,80,1665 (73.7%),595 (26.3%),"0.73 (0.38, 1.42)",1.61 (1.00),0.417,0.354,0.492
+us_weighted,Supplementary Tables 20-21,f1,Mortality,All-cause mortality,2260,80,2146 (95.0%),114 (5.0%),"1.24 (0.28, 5.49)",1.78 (1.00),0.410,0.778,0.878
+us_weighted,Supplementary Tables 20-21,f1,Composite,Any of 4 negative outcomes,2260,80,1107 (49.0%),1153 (51.0%),"0.50 (0.27, 0.92)",2.18 (1.25),0.688,0.026,0.079
+us_weighted,Supplementary Tables 20-21,f1,Composite,Any of 6 negative outcomes,2260,80,690 (30.5%),1570 (69.5%),"0.69 (0.36, 1.32)",1.71 (1.00),0.711,0.260,0.437

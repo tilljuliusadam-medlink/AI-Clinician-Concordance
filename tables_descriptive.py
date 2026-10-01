@@ -1,12 +1,5 @@
-"""Table 1 (baseline characteristics) and Table 2 (concordance metrics).
-
-Row labels and subgroup definitions follow the manuscript exactly, including
-its two different acute-care windows: Table 2 uses "Hospitalization/ER visit in
-the last 3 months", while every Table 3 denominator uses 12 months.
-
-Table 1 compares the upper and lower halves of the F1 median split: chi-square
-with a phi effect size for categorical rows, Welch's t-test with a standardized
-mean difference for continuous rows.
+"""
+Table 1 (baseline characteristics) and Supplementary Table 23 (concordance metrics by subgroup).
 """
 
 import numpy as np
@@ -16,187 +9,146 @@ import config as cfg
 import derive
 import stats as st
 
-RACE_LEVELS = ["African American", "Asian",
-               "Native American or Pacific Islander", "White", "Other"]
-EDUCATION_LEVELS = ["College/associate degree", "High school graduate or GED",
-                    "Bachelor's degree", "Graduate/professional degree",
-                    "Less than high school", "Other"]
-DIAGNOSIS_LABELS = [("Anxiety disorder", "dx_anxiety"),
-                    ("Depressive disorder", "dx_depressive"),
-                    ("ADHD", "dx_adhd"),
-                    ("Bipolar-spectrum disorder", "dx_bipolar"),
-                    ("Psychotic disorder", "dx_psychotic"),
-                    ("OCD", "dx_ocd")]
-
-# (label, column, value). Families come from derive._add_treatment_families and
-# are the union of their options, so a family can never contradict its members.
+RACE_LEVELS = ["African American", "Asian", "Native American or Pacific Islander", "White", "Other"]
+ETHNICITY_LEVELS = ["Hispanic or Latino", "Not Hispanic or Latino"]
+EDUCATION_LEVELS = ["Less than high school", "High school graduate or GED", "College/associate degree",
+                    "Bachelor's degree", "Graduate/professional degree"]
 TREATMENT_ROWS = [
-    ("Antidepressant", "clinician_chose_family_antidepressant"),
-    ("SSRI", "clinician_chose_ssri"),
-    ("Atypical Antidepressant", "clinician_chose_atypical_antidepressant"),
-    ("SNRI", "clinician_chose_snri"),
-    ("TCA", "clinician_chose_tca"),
-    ("MAOI", "clinician_chose_maoi"),
-    ("Antipsychotic", "clinician_chose_family_antipsychotic"),
-    ("SGA", "clinician_chose_family_sga"),
-    ("SGA excl. Clozapine", "clinician_chose_sga_excl_clozapine"),
-    ("Clozapine", "clinician_chose_clozapine"),
-    ("FGA", "clinician_chose_fga"),
-    ("Mood Stabilizer", "clinician_chose_mood_stabilizer"),
-    ("Anxiolytic/Hypnotic", "clinician_chose_family_anxiolytic_hypnotic"),
-    ("Benzodiazepine", "clinician_chose_benzodiazepine"),
-    ("Z Drug", "clinician_chose_z_drug"),
-    ("Stimulant", "clinician_chose_stimulant"),
-    ("Non-stimulant ADHD medication", "clinician_chose_nonstimulant_adhd"),
-    ("Psychotherapy", "clinician_chose_family_psychotherapy"),
-    ("CBT", "clinician_chose_cbt"),
-    ("DBT", "clinician_chose_dbt"),
-    ("ACT", "clinician_chose_act"),
-    ("EMDR", "clinician_chose_emdr"),
-    ("Other", "clinician_chose_other_psychotherapy"),
+    ("Antidepressant", "family_antidepressant"), ("Selective serotonin reuptake inhibitor", "ssri"),
+    ("Atypical antidepressant", "atypical_antidepressant"),
+    ("Serotonin-norepinephrine reuptake inhibitor", "snri"), ("Tricyclic antidepressant", "tca"),
+    ("Monoamine oxidase inhibitor", "maoi"), ("Antipsychotic", "family_antipsychotic"),
+    ("Second-generation antipsychotic (with or without clozapine)", "family_sga"),
+    ("Second-generation antipsychotic excl. clozapine", "sga_excl_clozapine"), ("Clozapine", "clozapine"),
+    ("First-generation antipsychotic", "fga"), ("Mood stabilizer", "mood_stabilizer"),
+    ("Anxiolytic/Hypnotic", "anxiolytic_sedative"),
+    ("Stimulant/Attention-deficit/hyperactivity disorder medication", "stimulant_adhd"),
+    ("Stimulant", "stimulant"), ("Non-stimulant attention-deficit/hyperactivity disorder medication",
+                                 "nonstimulant_adhd"),
+    ("Glutamatergic agent", "glutamatergic"), ("Cognitive enhancer", "cognitive_enhancer"),
+    ("Addiction medication", "addiction_medication"), ("Psychotherapy", "family_psychotherapy"),
+    ("Cognitive-behavioral therapy", "cbt"), ("Dialectical behavior therapy", "dbt"),
+    ("Acceptance and commitment therapy", "act"), ("Eye movement desensitization and reprocessing", "emdr"),
+    ("Other psychotherapy", "other_psychotherapy"), ("Neurostimulation (ECT / TMS / tDCS)", "neurostimulation"),
 ]
 
+# (label, column, value): one categorical Table 1 row
 CATEGORICAL_ROWS = (
     [("Female sex", "sex", "Female")]
-    + [(f"Race: {level}", "race", level) for level in RACE_LEVELS]
-    + [("Ethnicity: Hispanic/Latino", "ethnicity", "Hispanic/Latino"),
-       ("Ethnicity: Not Hispanic/Latino", "ethnicity", "Not Hispanic/Latino")]
-    + [(f"Education: {level}", "education", level)
-       for level in EDUCATION_LEVELS]
-    + [(f"Psychiatric diagnosis: {label}", column, 1)
-       for label, column in DIAGNOSIS_LABELS]
-    + [("Severe mental illness", "severe_mental_illness", 1),
-       ("At least 2 psychiatric diagnoses",
-        "two_or_more_psychiatric_diagnoses", 1),
-       ("Medical comorbidity", "medical_comorbidity", 1)]
-    + [(f"Treatment: {label}", column, 1) for label, column in TREATMENT_ROWS]
+    + [(f"Race: {v}", "race", v) for v in RACE_LEVELS]
+    + [(f"Ethnicity: {v}", "ethnicity", v) for v in ETHNICITY_LEVELS]
+    + [(f"Education: {v}", "education", v) for v in EDUCATION_LEVELS]
+    + [(f"Psychiatric diagnosis: {label}", col, 1) for col, label in cfg.DIAGNOSES]
+    + [("Severe mental illness", "smi", 1), (">=2 psychiatric diagnoses", "psy_dx_2plus", 1),
+       ("Medical diagnosis", "medical_dx_any", 1), ("Charlson comorbidity index >=1", "charlson_1plus", 1)]
+    + [(f"Treatment at the index visit: {label}", f"clinician_chose_{col}", 1) for label, col in TREATMENT_ROWS]
 )
+# (label, column, summaries): one continuous Table 1 row
+CONTINUOUS_ROWS = [
+    ("Age, mean (SD)", "age_years", ["mean"]),
+    ("Number of psychiatric diagnoses, median (IQR), mean (SD)", "n_psychiatric_diagnoses", ["median", "mean"]),
+    ("Number of medical diagnoses, median (IQR), mean (SD)", "n_medical_diagnoses", ["median", "mean"]),
+    ("Charlson comorbidity index, median (IQR)", "charlson_index", ["median"]),
+    ("BMI, mean (SD)", "bmi", ["mean"]),
+    ("Number of treatments at the index visit, clinician, median (IQR)", "n_treatments_clinician", ["median"]),
+    ("Number of treatments at the index visit, Comentra™, median (IQR)", "n_treatments_ai", ["median"]),
+    ("Comentra™ input message length, tokens, mean (SD)", "ai_input_tokens", ["mean"]),
+]
 
-CONTINUOUS_ROWS = [("Age", "age_years", "mean"),
-                   ("Body Mass Index", "bmi", "mean"),
-                   ("Number of psychiatric diagnoses",
-                    "n_psychiatric_diagnoses", "median")]
+
+def _summary(values, kinds):
+    parts = {"mean": lambda v: f"{v.mean():.1f} ({v.std(ddof=1):.1f})",
+             "median": lambda v: f"{v.median():.0f} ({v.quantile(0.25):.0f}-{v.quantile(0.75):.0f})"}
+    return ", ".join(parts[k](values) for k in kinds)
 
 
 def build_table1(df):
-    analyzable = df[df["f1_analyzable"] == 1]
-    upper = analyzable[analyzable["f1_half"] == "upper"]
-    lower = analyzable[analyzable["f1_half"] == "lower"]
-    groups = [("Overall", df), ("F1-analyzable", analyzable),
-              ("F1 upper half", upper), ("F1 lower half", lower)]
-
+    df = df.assign(psy_dx_2plus=(df["n_psychiatric_diagnoses"] >= 2).astype(int),
+                   medical_dx_any=(df["n_medical_diagnoses"] >= 1).astype(int),
+                   charlson_1plus=(df["charlson_index"] >= 1).astype(int))
+    analyzable = df[df["f1"].notna()]
+    upper, lower = analyzable[analyzable["f1_half"] == "upper"], analyzable[analyzable["f1_half"] == "lower"]
+    groups = [("Overall", df), ("F1-analyzable", analyzable), ("F1 upper half", upper), ("F1 lower half", lower)]
     rows = []
-    for label, column, value in CATEGORICAL_ROWS:
+    for label, col, value in CATEGORICAL_ROWS:
         row = {"Characteristic": label}
-        cells = []
         for name, frame in groups:
-            hits = int((frame[column] == value).sum())
-            cells.append(hits)
-            row[f"{name} (n={len(frame)})"] = (
-                "NA" if len(frame) == 0
-                else f"{hits} ({100 * hits / len(frame):.1f})")
-        hit_u = int((upper[column] == value).sum())
-        hit_l = int((lower[column] == value).sum())
-        phi, lo, hi, p = st.phi_ci([[hit_u, len(upper) - hit_u],
-                                    [hit_l, len(lower) - hit_l]])
-        row["Effect size (95% CI)"] = (
-            "NA" if not np.isfinite(phi)
-            else f"phi {phi:.3f} ({lo:.3f} to {hi:.3f})")
-        row["p"] = st.fmt_p(p)
-        # The disclosure rule applies cell by cell, so the count that governs
-        # the row is the smallest cell the row actually prints, not the total
-        # of the analyzable column.
-        row["num_patients"] = min(cells)
+            recorded = frame[col].notna()
+            hits = int((frame[col] == value).sum())
+            row[f"{name} (n={len(frame)})"] = f"{hits} ({100 * hits / recorded.sum():.1f}%)"
+        u, lo = upper[upper[col].notna()], lower[lower[col].notna()]
+        hu, hl = int((u[col] == value).sum()), int((lo[col] == value).sum())
+        phi, ci_lo, ci_hi, p = st.phi_ci([[hu, len(u) - hu], [hl, len(lo) - hl]])
+        row["Effect (95% CI)"] = st.fmt_ci(phi, ci_lo, ci_hi) if np.isfinite(phi) else "NA"
+        row["p"], row["num_patients"] = st.fmt_p(p), int(analyzable[col].notna().sum())
         rows.append(row)
-
-    for label, column, kind in CONTINUOUS_ROWS:
-        row = {"Characteristic": label
-               + (", mean (SD)" if kind == "mean" else ", median (IQR)")}
+    for label, col, kinds in CONTINUOUS_ROWS:
+        row = {"Characteristic": label}
         for name, frame in groups:
-            values = pd.to_numeric(frame[column], errors="coerce").dropna()
-            if kind == "mean":
-                text = f"{values.mean():.2f} ({values.std(ddof=1):.2f})"
-            else:
-                q1, q3 = values.quantile([0.25, 0.75])
-                text = f"{values.median():.0f} ({q1:.0f}-{q3:.0f})"
-            row[f"{name} (n={len(frame)})"] = text
-        d, lo, hi, p = st.smd_ci(
-            pd.to_numeric(upper[column], errors="coerce"),
-            pd.to_numeric(lower[column], errors="coerce"))
-        row["Effect size (95% CI)"] = (
-            "NA" if not np.isfinite(d)
-            else f"SMD {d:.3f} ({lo:.3f} to {hi:.3f})")
-        row["p"] = st.fmt_p(p)
-        row["num_patients"] = len(analyzable)
+            row[f"{name} (n={len(frame)})"] = _summary(frame[col].dropna(), kinds)
+        d, ci_lo, ci_hi, p = st.smd_ci(upper[col], lower[col])
+        row["Effect (95% CI)"], row["p"] = st.fmt_ci(d, ci_lo, ci_hi), st.fmt_p(p)
+        row["num_patients"] = int(analyzable[col].notna().sum())
         rows.append(row)
-
     return pd.DataFrame(rows)
 
 
-def _subgroups(df):
-    """Yield (subgroup name, [(level label, mask), ...]) exactly as Table 2."""
-    yield "Overall", [("Overall", pd.Series(True, index=df.index))]
-    yield "Sex", [(level, df["sex"] == level) for level in ["Male", "Female"]]
-    yield "Race", [(level, df["race"] == level) for level in
-                   ["White", "African American",
-                    "Native American or Pacific Islander", "Asian", "Other"]]
-    yield "Psychiatric diagnosis", [(label, df[column] == 1)
-                                    for label, column in DIAGNOSIS_LABELS]
-    median_dx = df["n_psychiatric_diagnoses"].median()
-    yield "Number of psychiatric diagnoses", [
-        (f"at or above median ({median_dx:.0f})",
-         df["n_psychiatric_diagnoses"] >= median_dx),
-        (f"below median ({median_dx:.0f})",
-         df["n_psychiatric_diagnoses"] < median_dx)]
-    yield "Severe mental illness", [
-        ("Yes", df["severe_mental_illness"] == 1),
-        ("No", df["severe_mental_illness"] == 0)]
-    # The manuscript's Table 2 window is 3 months, not the 12 months used for
-    # the Table 3 denominators.
-    yield "Hospitalization/ER visit in the last 3 months", [
-        ("Yes", df[cfg.ACUTE_CARE_3MO] == 1),
-        ("No", df[cfg.ACUTE_CARE_3MO] == 0)]
-    yield "Suicidal thoughts/behaviors", [
-        ("Yes", (df["dp_suicidal_thoughts"] == 1)
-         | (df["dp_suicidal_behavior"] == 1)),
-        ("No", (df["dp_suicidal_thoughts"] == 0)
-         & (df["dp_suicidal_behavior"] == 0))]
+def _yes_no(heading, flag):
+    return heading, [("Yes", flag == 1), ("No", flag == 0)]
 
 
-# Table 2 reports a p-value for F1, balanced accuracy and PABAK only.
-METRIC_COLUMNS = [("Recall/Sensitivity", "concordance_recall", False),
-                  ("Precision", "concordance_precision", False),
-                  ("Specificity", "concordance_specificity", False),
-                  ("F1", "f1", True),
-                  ("Balanced Accuracy", "balanced_accuracy", True),
-                  ("PABAK", "pabak", True)]
+def _median_split(heading, values):
+    m = values.median()
+    return heading, [(f">=median ({m:.0f})", values >= m), (f"<median ({m:.0f})", values < m)]
 
 
-def build_table2(df):
+def subgroups(df):
+    """(heading, [(level, mask)]) in the order of Supplementary Table 23."""
+    out = [("Overall", [("Overall", pd.Series(True, index=df.index))]),
+           _median_split("Age", df["age_years"]),
+           ("Sex", [(v, df["sex"] == v) for v in ("Male", "Female")]),
+           ("Race", [(v, df["race"] == v) for v in RACE_LEVELS]),
+           ("Ethnicity", [(v, df["ethnicity"] == v) for v in ETHNICITY_LEVELS])]
+    out += [_yes_no(f"Psychiatric diagnosis: {label}", df[col]) for col, label in cfg.DIAGNOSES]
+    out += [_yes_no("Medical comorbidity", (df["n_medical_diagnoses"] >= 1).astype(int)),
+            _median_split("Number of psychiatric diagnoses", df["n_psychiatric_diagnoses"]),
+            _median_split("Number of medical diagnoses", df["n_medical_diagnoses"])]
+    out += [_yes_no(f"Pre-index visit {label}", df[col]) for label, col in (
+        ("psychiatric ER visit/hospitalization", "pre_acute_psych"),
+        ("medical ER visit/hospitalization", "pre_acute_med"),
+        ("suicidal thoughts/behaviors", "pre_suicidal_any"),
+        ("medication nonadherence", "pre_nonadherence"),
+        ("psychiatric appointment no-show", "pre_noshow_any"))]
+    for model in cfg.BINARY_MODELS:          # every binary outcome, among the patients its model is fitted on
+        eligible = df.eval(model.gate) if model.gate else pd.Series(True, index=df.index)
+        outcome = df[model.formula.split("~")[0].strip()].where(eligible)
+        out.append(_yes_no(f"Follow-up: {model.label}", outcome))
+    out += [_yes_no(label, df[col]) for label, col in (
+        ("Severe mental illness", "smi"), ("Severe mental illness + >=1 psychiatric comorbidity", "smi_plus1"),
+        ("Severe mental illness + >=2 psychiatric comorbidities", "smi_plus2"),
+        ("Severe mental illness with pre-index ER visit/hospitalization", "smi_acute"),
+        ("Primary psychiatric diagnosis", "primary_dx_psychiatric"),
+        ("Primary medical diagnosis", "primary_dx_medical"))]
+    return out
+
+
+METRIC_COLUMNS = [("Recall/Sensitivity", "recall", False), ("Precision", "precision", False),
+                  ("Specificity", "specificity", False), ("F1", "f1", True),
+                  ("Balanced Accuracy", "balanced_accuracy", True), ("PABAK", "pabak", True), ("MCC", "mcc", True)]
+
+
+def build_concordance_table(df):
     rows = []
-    for name, levels in _subgroups(df):
-        tests = {}
-        if len(levels) > 1:
-            for label, column, tested in METRIC_COLUMNS:
-                if tested:
-                    tests[label] = st.welch_or_anova(
-                        [df.loc[mask, column].dropna().to_numpy()
-                         for _, mask in levels])
+    for heading, levels in subgroups(df):
+        tests = {col: st.welch_anova_p([df.loc[mask, col] for _, mask in levels])
+                 for _, col, tested in METRIC_COLUMNS if tested and len(levels) > 1}
         for level, mask in levels:
-            frame = df[mask]
-            row = {"Subgroup": name, "Level": level,
-                   "num_patients": int(len(frame)),
-                   "num_patients (F1 computable)":
-                       int(frame["f1_analyzable"].sum())}
-            for label, column, _ in METRIC_COLUMNS:
-                values = frame[column].dropna()
-                row[label] = ("NA" if values.empty
-                              else f"{values.mean():.2f} "
-                                   f"({values.std(ddof=1):.2f})")
-            for label, _, tested in METRIC_COLUMNS:
+            row = {"Subgroup": heading, "Level": level, "num_patients": int(mask.sum())}
+            for label, col, tested in METRIC_COLUMNS:
+                values = df.loc[mask, col].dropna()
+                row[label] = f"{values.mean():.2f} ({values.std(ddof=1):.2f})"
                 if tested:
-                    row[f"p ({label})"] = (st.fmt_p(tests[label])
-                                           if label in tests else "")
+                    row[f"p ({label})"] = st.fmt_p(tests[col]) if col in tests else ""
             rows.append(row)
     return pd.DataFrame(rows)
 
@@ -204,7 +156,7 @@ def build_table2(df):
 def main():
     df = derive.load_analytic_table()
     st.write_table(build_table1(df), "table1_baseline_characteristics.csv")
-    st.write_table(build_table2(df), "table2_concordance_metrics.csv")
+    st.write_table(build_concordance_table(df), "supp_table23_concordance_metrics.csv")
 
 
 if __name__ == "__main__":

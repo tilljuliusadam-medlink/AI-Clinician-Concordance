@@ -1,0 +1,109 @@
+Block,Tables,Metric,Domain,Outcome,num_patients,num_clinicians,Beta (95% CI),Standardized beta (95% CI),Mean (SD),SE,E (CI),Clinician intercept SD,p,p (BH)
+f1_main,Tables 2-3,f1,Cumulative cost (USD),Cumulative psychiatric cost,2260,80,"67.50 (-986.05, 1121.05)","0.02 (-0.25, 0.29)",1323.06 (3909.96),537.53,1.14 (1.00),445.293,0.900,0.959
+f1_main,Tables 2-3,f1,Cumulative cost (USD),Cumulative medical cost,2260,80,"-2641.47 (-4468.78, -814.16)","-0.36 (-0.62, -0.11)",4528.00 (7240.51),932.30,2.13 (1.45),1148.289,0.005,0.072
+f1_main,Tables 2-3,f1,Cumulative cost (USD),Cumulative total cost,2260,80,"-2580.56 (-4717.55, -443.57)","-0.31 (-0.56, -0.05)",5851.07 (8356.17),1090.30,1.98 (1.28),1495.659,0.018,0.072
+f1_main,Tables 2-3,f1,Utilization,Psychiatric hospital days,2260,80,"0.10 (-0.43, 0.63)","0.05 (-0.22, 0.32)",0.39 (1.96),0.27,1.27 (1.00),0.156,0.716,0.882
+f1_main,Tables 2-3,f1,Utilization,Medical hospital days,2260,80,"-0.57 (-1.09, -0.05)","-0.29 (-0.56, -0.02)",0.51 (1.93),0.26,1.94 (1.18),0.180,0.032,0.094
+f1_main,Tables 2-3,f1,Utilization,Total hospital days,2260,80,"-0.47 (-1.22, 0.28)","-0.17 (-0.44, 0.10)",0.90 (2.76),0.38,1.61 (1.00),0.338,0.217,0.347
+f1_main,Tables 2-3,f1,Utilization,Psychiatric appointments,2260,80,"-0.55 (-1.35, 0.24)","-0.18 (-0.43, 0.08)",2.65 (3.12),0.40,1.63 (1.00),0.608,0.170,0.286
+f1_main,Tables 2-3,f1,Utilization,Medical appointments,2260,80,"-5.68 (-11.05, -0.31)","-0.25 (-0.49, -0.01)",17.00 (22.78),2.74,1.82 (1.12),3.677,0.038,0.102
+f1_main,Tables 2-3,f1,Utilization,Total appointments,2260,80,"-6.18 (-11.68, -0.69)","-0.26 (-0.50, -0.03)",19.65 (23.49),2.80,1.86 (1.19),4.274,0.027,0.094
+f1_main,Tables 2-3,f1,Engagement,Number of psychiatric appointment no-shows,2260,80,"-0.00 (-0.19, 0.19)","-0.00 (-0.27, 0.27)",0.37 (0.72),0.10,1.04 (1.00),0.039,0.991,0.991
+f1_main,Tables 2-3,f1,Composite,Number of any of 4 negative outcomes,2260,80,"-0.24 (-0.43, -0.05)","-0.32 (-0.57, -0.06)",0.66 (0.74),0.10,2.00 (1.30),0.185,0.015,0.072
+f1_main,Tables 2-3,f1,Composite,Number of any of 6 negative outcomes,2260,80,"-0.30 (-0.56, -0.05)","-0.30 (-0.56, -0.05)",1.14 (1.00),0.13,1.97 (1.27),0.289,0.018,0.072
+smi,Supplementary Tables 1-2,f1,Cumulative cost (USD),Cumulative psychiatric cost,1285,80,"-69.33 (-1533.70, 1395.04)","-0.02 (-0.38, 0.34)",1460.14 (4087.82),747.13,1.14 (1.00),564.560,0.926,0.990
+smi,Supplementary Tables 1-2,f1,Cumulative cost (USD),Cumulative medical cost,1285,80,"442.88 (-1997.72, 2883.48)","0.06 (-0.28, 0.40)",4676.39 (7245.12),1245.20,1.30 (1.00),1110.596,0.722,0.990
+smi,Supplementary Tables 1-2,f1,Cumulative cost (USD),Cumulative total cost,1285,80,"353.00 (-2528.77, 3234.76)","0.04 (-0.30, 0.38)",6136.53 (8468.31),1470.29,1.24 (1.00),1621.592,0.810,0.990
+smi,Supplementary Tables 1-2,f1,Utilization,Psychiatric hospital days,1285,80,"0.10 (-0.63, 0.83)","0.05 (-0.31, 0.41)",0.45 (2.02),0.37,1.26 (1.00),0.236,0.791,0.990
+smi,Supplementary Tables 1-2,f1,Utilization,Medical hospital days,1285,80,"0.03 (-0.66, 0.73)","0.02 (-0.34, 0.38)",0.50 (1.94),0.36,1.14 (1.00),0.188,0.923,0.990
+smi,Supplementary Tables 1-2,f1,Utilization,Total hospital days,1285,80,"0.12 (-0.89, 1.14)","0.04 (-0.32, 0.40)",0.95 (2.82),0.52,1.24 (1.00),0.462,0.814,0.990
+smi,Supplementary Tables 1-2,f1,Utilization,Psychiatric appointments,1285,80,"-0.25 (-1.34, 0.84)","-0.08 (-0.42, 0.26)",2.81 (3.21),0.56,1.35 (1.00),0.718,0.653,0.990
+smi,Supplementary Tables 1-2,f1,Utilization,Medical appointments,1285,80,"-1.50 (-8.84, 5.85)","-0.06 (-0.38, 0.25)",17.44 (23.41),3.75,1.31 (1.00),3.906,0.689,0.990
+smi,Supplementary Tables 1-2,f1,Utilization,Total appointments,1285,80,"-1.64 (-9.16, 5.87)","-0.07 (-0.38, 0.24)",20.24 (24.11),3.84,1.32 (1.00),4.504,0.668,0.990
+smi,Supplementary Tables 1-2,f1,Engagement,Number of psychiatric appointment no-shows,1285,80,"-0.06 (-0.34, 0.21)","-0.08 (-0.44, 0.27)",0.39 (0.77),0.14,1.37 (1.00),0.088,0.646,0.990
+smi,Supplementary Tables 1-2,f1,Composite,Number of any of 4 negative outcomes,1285,80,"-0.09 (-0.35, 0.16)","-0.12 (-0.46, 0.22)",0.69 (0.75),0.13,1.48 (1.00),0.221,0.479,0.990
+smi,Supplementary Tables 1-2,f1,Composite,Number of any of 6 negative outcomes,1285,80,"-0.18 (-0.52, 0.15)","-0.18 (-0.52, 0.15)",1.18 (1.01),0.17,1.64 (1.00),0.339,0.287,0.990
+smi_plus1,Supplementary Tables 3-4,f1,Cumulative cost (USD),Cumulative psychiatric cost,1110,80,"142.86 (-1544.97, 1830.68)","0.03 (-0.36, 0.42)",1560.91 (4329.15),861.13,1.21 (1.00),624.385,0.868,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Utilization,Psychiatric hospital days,1110,80,"0.18 (-0.67, 1.02)","0.08 (-0.31, 0.47)",0.50 (2.15),0.43,1.37 (1.00),0.278,0.679,0.941
+smi_plus1,Supplementary Tables 3-4,f1,Composite,Number of any of 4 negative outcomes,1110,80,"0.00 (-0.28, 0.28)","0.01 (-0.36, 0.37)",0.69 (0.75),0.14,1.07 (1.00),0.222,0.978,0.978
+smi_plus1,Supplementary Tables 3-4,f1,Composite,Number of any of 6 negative outcomes,1110,80,"-0.10 (-0.47, 0.27)","-0.10 (-0.46, 0.27)",1.19 (1.02),0.19,1.40 (1.00),0.336,0.608,0.941
+smi_plus2,Supplementary Tables 5-6,f1,Cumulative cost (USD),Cumulative psychiatric cost,618,78,"500.86 (-2392.79, 3394.50)","0.10 (-0.46, 0.66)",1865.01 (5180.23),1476.35,1.41 (1.00),653.734,0.734,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Utilization,Psychiatric hospital days,618,78,"0.15 (-1.22, 1.53)","0.06 (-0.50, 0.62)",0.63 (2.46),0.70,1.31 (1.00),0.330,0.828,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Composite,Number of any of 4 negative outcomes,618,78,"0.10 (-0.30, 0.50)","0.13 (-0.38, 0.64)",0.72 (0.77),0.20,1.50 (1.00),0.290,0.619,0.952
+smi_plus2,Supplementary Tables 5-6,f1,Composite,Number of any of 6 negative outcomes,618,78,"-0.02 (-0.54, 0.50)","-0.02 (-0.52, 0.49)",1.23 (1.03),0.27,1.14 (1.00),0.383,0.946,0.952
+smi_acute,Supplementary Tables 7-8,f1,Cumulative cost (USD),Cumulative psychiatric cost,554,78,"-1646.28 (-3846.94, 554.38)","-0.42 (-0.99, 0.14)",1626.08 (3883.07),1122.78,2.30 (1.00),0.347,0.143,0.557
+smi_acute,Supplementary Tables 7-8,f1,Utilization,Psychiatric hospital days,554,78,"-0.48 (-1.62, 0.66)","-0.24 (-0.81, 0.33)",0.54 (2.01),0.58,1.79 (1.00),0.000,0.409,0.568
+smi_acute,Supplementary Tables 7-8,f1,Composite,Number of any of 4 negative outcomes,554,78,"-0.18 (-0.60, 0.25)","-0.23 (-0.76, 0.31)",0.84 (0.79),0.22,1.76 (1.00),0.244,0.410,0.568
+smi_acute,Supplementary Tables 7-8,f1,Composite,Number of any of 6 negative outcomes,554,78,"-0.14 (-0.70, 0.42)","-0.13 (-0.67, 0.40)",1.33 (1.05),0.29,1.51 (1.00),0.348,0.628,0.628
+primary_psychiatric,Supplementary Tables 9-10,f1,Cumulative cost (USD),Cumulative psychiatric cost,2098,80,"295.00 (-785.28, 1375.29)","0.08 (-0.20, 0.36)",1323.15 (3861.65),551.16,1.35 (1.00),498.741,0.592,0.707
+primary_psychiatric,Supplementary Tables 9-10,f1,Cumulative cost (USD),Cumulative medical cost,2098,80,"-2582.00 (-4479.10, -684.90)","-0.36 (-0.62, -0.10)",4500.72 (7207.91),967.91,2.12 (1.40),1144.385,0.008,0.098
+primary_psychiatric,Supplementary Tables 9-10,f1,Cumulative cost (USD),Cumulative total cost,2098,80,"-2273.81 (-4487.01, -60.62)","-0.27 (-0.54, -0.01)",5823.88 (8325.64),1129.18,1.88 (1.09),1555.995,0.044,0.128
+primary_psychiatric,Supplementary Tables 9-10,f1,Utilization,Psychiatric hospital days,2098,80,"0.17 (-0.38, 0.72)","0.09 (-0.20, 0.37)",0.40 (1.97),0.28,1.38 (1.00),0.171,0.548,0.707
+primary_psychiatric,Supplementary Tables 9-10,f1,Utilization,Medical hospital days,2098,80,"-0.44 (-0.97, 0.09)","-0.23 (-0.51, 0.05)",0.50 (1.91),0.27,1.77 (1.00),0.181,0.105,0.197
+primary_psychiatric,Supplementary Tables 9-10,f1,Utilization,Total hospital days,2098,80,"-0.27 (-1.04, 0.51)","-0.10 (-0.38, 0.18)",0.90 (2.76),0.40,1.41 (1.00),0.361,0.496,0.707
+primary_psychiatric,Supplementary Tables 9-10,f1,Utilization,Psychiatric appointments,2098,80,"-0.47 (-1.29, 0.34)","-0.15 (-0.42, 0.11)",2.64 (3.10),0.42,1.56 (1.00),0.529,0.255,0.430
+primary_psychiatric,Supplementary Tables 9-10,f1,Utilization,Medical appointments,2098,80,"-5.75 (-11.29, -0.20)","-0.25 (-0.50, -0.01)",16.92 (22.56),2.83,1.83 (1.10),3.548,0.042,0.128
+primary_psychiatric,Supplementary Tables 9-10,f1,Utilization,Total appointments,2098,80,"-6.13 (-11.78, -0.47)","-0.26 (-0.51, -0.02)",19.56 (23.23),2.89,1.86 (1.16),4.140,0.034,0.120
+primary_psychiatric,Supplementary Tables 9-10,f1,Engagement,Number of psychiatric appointment no-shows,2098,80,"-0.03 (-0.23, 0.17)","-0.04 (-0.31, 0.24)",0.36 (0.72),0.10,1.22 (1.00),0.047,0.795,0.847
+primary_psychiatric,Supplementary Tables 9-10,f1,Composite,Number of any of 4 negative outcomes,2098,80,"-0.25 (-0.45, -0.06)","-0.34 (-0.61, -0.08)",0.66 (0.74),0.10,2.07 (1.35),0.181,0.012,0.098
+primary_psychiatric,Supplementary Tables 9-10,f1,Composite,Number of any of 6 negative outcomes,2098,80,"-0.30 (-0.57, -0.04)","-0.30 (-0.56, -0.04)",1.13 (1.00),0.13,1.96 (1.23),0.282,0.025,0.120
+primary_medical,Supplementary Tables 11-12,f1,Cumulative cost (USD),Cumulative psychiatric cost,1327,80,"-948.05 (-2225.11, 329.01)","-0.27 (-0.62, 0.09)",1234.36 (3563.66),651.56,1.86 (1.00),120.379,0.146,0.260
+primary_medical,Supplementary Tables 11-12,f1,Cumulative cost (USD),Cumulative medical cost,1327,80,"-2504.17 (-4772.36, -235.98)","-0.37 (-0.70, -0.03)",4458.58 (6786.57),1157.24,2.15 (1.21),1060.112,0.030,0.163
+primary_medical,Supplementary Tables 11-12,f1,Cumulative cost (USD),Cumulative total cost,1327,80,"-3506.07 (-6129.38, -882.77)","-0.45 (-0.79, -0.11)",5692.94 (7759.61),1338.42,2.38 (1.46),1380.494,0.009,0.080
+primary_medical,Supplementary Tables 11-12,f1,Utilization,Psychiatric hospital days,1327,80,"-0.28 (-0.92, 0.35)","-0.16 (-0.52, 0.20)",0.34 (1.77),0.32,1.59 (1.00),0.058,0.381,0.530
+primary_medical,Supplementary Tables 11-12,f1,Utilization,Medical hospital days,1327,80,"-0.61 (-1.31, 0.09)","-0.31 (-0.67, 0.04)",0.51 (1.96),0.35,1.99 (1.00),0.070,0.085,0.228
+primary_medical,Supplementary Tables 11-12,f1,Utilization,Total hospital days,1327,80,"-0.90 (-1.85, 0.05)","-0.34 (-0.70, 0.02)",0.85 (2.65),0.49,2.07 (1.00),0.178,0.063,0.223
+primary_medical,Supplementary Tables 11-12,f1,Utilization,Psychiatric appointments,1327,80,"-0.85 (-1.91, 0.22)","-0.27 (-0.60, 0.07)",2.71 (3.18),0.54,1.87 (1.00),0.674,0.118,0.260
+primary_medical,Supplementary Tables 11-12,f1,Utilization,Medical appointments,1327,80,"-8.86 (-15.21, -2.51)","-0.43 (-0.75, -0.12)",16.92 (20.39),3.24,2.33 (1.48),3.100,0.006,0.080
+primary_medical,Supplementary Tables 11-12,f1,Utilization,Total appointments,1327,80,"-9.73 (-16.24, -3.22)","-0.46 (-0.77, -0.15)",19.63 (21.15),3.32,2.41 (1.56),3.776,0.003,0.080
+primary_medical,Supplementary Tables 11-12,f1,Engagement,Number of psychiatric appointment no-shows,1327,80,"-0.05 (-0.30, 0.21)","-0.07 (-0.42, 0.29)",0.37 (0.71),0.13,1.32 (1.00),0.019,0.717,0.764
+primary_medical,Supplementary Tables 11-12,f1,Composite,Number of any of 4 negative outcomes,1327,80,"-0.20 (-0.45, 0.06)","-0.26 (-0.60, 0.08)",0.65 (0.75),0.13,1.85 (1.00),0.195,0.131,0.260
+primary_medical,Supplementary Tables 11-12,f1,Composite,Number of any of 6 negative outcomes,1327,80,"-0.33 (-0.67, 0.00)","-0.33 (-0.67, 0.00)",1.14 (1.00),0.17,2.05 (1.00),0.308,0.051,0.205
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Cumulative cost (USD),Cumulative psychiatric cost,3000,80,"-882.98 (-2183.75, 417.78)","-0.20 (-0.50, 0.10)",1444.91 (4358.87),663.65,1.70 (1.00),240.703,0.183,0.325
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Cumulative cost (USD),Cumulative medical cost,3000,80,"-4229.01 (-6252.95, -2205.07)","-0.58 (-0.86, -0.30)",4682.35 (7279.72),1032.62,2.78 (1.96),1082.963,<0.001,<0.001
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Cumulative cost (USD),Cumulative total cost,3000,80,"-5112.84 (-7531.78, -2693.89)","-0.60 (-0.88, -0.31)",6127.25 (8580.73),1234.16,2.83 (1.99),1444.985,<0.001,<0.001
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Utilization,Psychiatric hospital days,3000,80,"-0.11 (-0.74, 0.53)","-0.05 (-0.35, 0.25)",0.44 (2.11),0.32,1.27 (1.00),0.136,0.740,0.846
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Utilization,Medical hospital days,3000,80,"-0.98 (-1.55, -0.40)","-0.50 (-0.80, -0.21)",0.53 (1.94),0.29,2.54 (1.71),0.080,<0.001,0.009
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Utilization,Total hospital days,3000,80,"-1.07 (-1.93, -0.22)","-0.37 (-0.67, -0.08)",0.98 (2.87),0.44,2.16 (1.35),0.264,0.014,0.049
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Utilization,Psychiatric appointments,3000,80,"-1.04 (-1.92, -0.15)","-0.33 (-0.61, -0.05)",2.77 (3.15),0.45,2.04 (1.26),0.564,0.022,0.065
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Utilization,Medical appointments,3000,80,"-7.69 (-13.82, -1.55)","-0.33 (-0.58, -0.07)",17.55 (23.63),3.13,2.03 (1.32),3.406,0.014,0.049
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Utilization,Total appointments,3000,80,"-8.64 (-14.89, -2.38)","-0.36 (-0.61, -0.10)",20.32 (24.31),3.19,2.11 (1.41),4.003,0.007,0.036
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Engagement,Number of psychiatric appointment no-shows,3000,80,"-0.11 (-0.32, 0.11)","-0.15 (-0.44, 0.15)",0.38 (0.73),0.11,1.55 (1.00),0.044,0.334,0.464
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Composite,Number of any of 4 negative outcomes,3000,80,"-0.27 (-0.48, -0.05)","-0.35 (-0.63, -0.07)",0.68 (0.77),0.11,2.09 (1.32),0.187,0.015,0.049
+balanced_accuracy,Supplementary Tables 13-14,balanced_accuracy,Composite,Number of any of 6 negative outcomes,3000,80,"-0.40 (-0.68, -0.12)","-0.39 (-0.67, -0.11)",1.17 (1.01),0.14,2.21 (1.46),0.304,0.006,0.036
+pabak,Supplementary Tables 15-16,pabak,Cumulative cost (USD),Cumulative psychiatric cost,3000,80,"-626.68 (-2576.10, 1322.73)","-0.14 (-0.59, 0.30)",1444.91 (4358.87),994.60,1.54 (1.00),357.494,0.529,0.677
+pabak,Supplementary Tables 15-16,pabak,Cumulative cost (USD),Cumulative medical cost,3000,80,"-6195.56 (-9224.14, -3166.97)","-0.85 (-1.27, -0.44)",4682.35 (7279.72),1545.20,3.76 (2.34),1133.686,<0.001,0.002
+pabak,Supplementary Tables 15-16,pabak,Cumulative cost (USD),Cumulative total cost,3000,80,"-6829.64 (-10452.59, -3206.69)","-0.80 (-1.22, -0.37)",6127.25 (8580.73),1848.44,3.54 (2.16),1451.998,<0.001,0.004
+pabak,Supplementary Tables 15-16,pabak,Utilization,Psychiatric hospital days,3000,80,"0.10 (-0.85, 1.04)","0.05 (-0.40, 0.49)",0.44 (2.11),0.48,1.25 (1.00),0.136,0.842,0.869
+pabak,Supplementary Tables 15-16,pabak,Utilization,Medical hospital days,3000,80,"-1.50 (-2.36, -0.64)","-0.77 (-1.22, -0.33)",0.53 (1.94),0.44,3.46 (2.04),0.086,<0.001,0.005
+pabak,Supplementary Tables 15-16,pabak,Utilization,Total hospital days,3000,80,"-1.40 (-2.68, -0.11)","-0.49 (-0.93, -0.04)",0.98 (2.87),0.65,2.49 (1.23),0.266,0.033,0.086
+pabak,Supplementary Tables 15-16,pabak,Utilization,Psychiatric appointments,3000,80,"-1.32 (-2.65, 0.01)","-0.42 (-0.84, 0.00)",2.77 (3.15),0.68,2.29 (1.00),0.563,0.051,0.103
+pabak,Supplementary Tables 15-16,pabak,Utilization,Medical appointments,3000,80,"-11.83 (-21.01, -2.66)","-0.50 (-0.89, -0.11)",17.55 (23.63),4.68,2.53 (1.45),3.406,0.012,0.040
+pabak,Supplementary Tables 15-16,pabak,Utilization,Total appointments,3000,80,"-13.06 (-22.42, -3.70)","-0.54 (-0.92, -0.15)",20.32 (24.31),4.78,2.64 (1.56),4.002,0.006,0.029
+pabak,Supplementary Tables 15-16,pabak,Engagement,Number of psychiatric appointment no-shows,3000,80,"-0.08 (-0.41, 0.24)","-0.11 (-0.56, 0.33)",0.38 (0.73),0.17,1.46 (1.00),0.058,0.613,0.700
+pabak,Supplementary Tables 15-16,pabak,Composite,Number of any of 4 negative outcomes,3000,80,"-0.40 (-0.73, -0.08)","-0.53 (-0.95, -0.10)",0.68 (0.77),0.17,2.61 (1.43),0.187,0.015,0.043
+pabak,Supplementary Tables 15-16,pabak,Composite,Number of any of 6 negative outcomes,3000,80,"-0.55 (-0.98, -0.13)","-0.55 (-0.96, -0.13)",1.17 (1.01),0.22,2.67 (1.50),0.304,0.010,0.040
+mcc,Supplementary Tables 17-18,mcc,Cumulative cost (USD),Cumulative psychiatric cost,2364,80,"-705.46 (-1473.64, 62.72)","-0.16 (-0.34, 0.01)",1369.65 (4284.87),391.93,1.59 (1.00),320.123,0.072,0.128
+mcc,Supplementary Tables 17-18,mcc,Cumulative cost (USD),Cumulative medical cost,2364,80,"-2270.80 (-3496.83, -1044.77)","-0.31 (-0.48, -0.14)",4584.62 (7290.56),625.53,1.99 (1.54),1092.330,<0.001,0.004
+mcc,Supplementary Tables 17-18,mcc,Cumulative cost (USD),Cumulative total cost,2364,80,"-2999.17 (-4460.76, -1537.58)","-0.35 (-0.52, -0.18)",5954.27 (8555.83),745.71,2.09 (1.64),1392.448,<0.001,0.002
+mcc,Supplementary Tables 17-18,mcc,Utilization,Psychiatric hospital days,2364,80,"-0.17 (-0.54, 0.20)","-0.08 (-0.26, 0.10)",0.41 (2.05),0.19,1.36 (1.00),0.104,0.376,0.463
+mcc,Supplementary Tables 17-18,mcc,Utilization,Medical hospital days,2364,80,"-0.51 (-0.85, -0.16)","-0.26 (-0.44, -0.08)",0.52 (1.95),0.18,1.85 (1.37),0.160,0.004,0.016
+mcc,Supplementary Tables 17-18,mcc,Utilization,Total hospital days,2364,80,"-0.68 (-1.19, -0.17)","-0.24 (-0.42, -0.06)",0.92 (2.83),0.26,1.79 (1.30),0.292,0.009,0.029
+mcc,Supplementary Tables 17-18,mcc,Utilization,Psychiatric appointments,2364,80,"-0.79 (-1.33, -0.25)","-0.25 (-0.42, -0.08)",2.69 (3.18),0.27,1.82 (1.36),0.610,0.004,0.016
+mcc,Supplementary Tables 17-18,mcc,Utilization,Medical appointments,2364,80,"-4.11 (-7.72, -0.51)","-0.18 (-0.34, -0.02)",17.13 (22.88),1.84,1.64 (1.16),3.473,0.025,0.068
+mcc,Supplementary Tables 17-18,mcc,Utilization,Total appointments,2364,80,"-4.84 (-8.53, -1.15)","-0.21 (-0.36, -0.05)",19.82 (23.60),1.88,1.70 (1.26),4.102,0.010,0.029
+mcc,Supplementary Tables 17-18,mcc,Engagement,Number of psychiatric appointment no-shows,2364,80,"-0.07 (-0.20, 0.06)","-0.09 (-0.27, 0.09)",0.37 (0.73),0.07,1.39 (1.00),0.038,0.318,0.423
+mcc,Supplementary Tables 17-18,mcc,Composite,Number of any of 4 negative outcomes,2364,80,"-0.20 (-0.33, -0.07)","-0.27 (-0.44, -0.10)",0.67 (0.75),0.07,1.87 (1.42),0.179,0.002,0.011
+mcc,Supplementary Tables 17-18,mcc,Composite,Number of any of 6 negative outcomes,2364,80,"-0.30 (-0.47, -0.14)","-0.30 (-0.47, -0.13)",1.15 (1.00),0.09,1.97 (1.52),0.289,<0.001,0.004
+us_weighted,Supplementary Tables 20-21,f1,Cumulative cost (USD),Cumulative psychiatric cost,2260,80,"880.32 (-261.41, 2022.05)","0.20 (-0.06, 0.46)",1523.81 (4349.18),582.52,1.70 (1.00),1271.425,0.131,0.299
+us_weighted,Supplementary Tables 20-21,f1,Cumulative cost (USD),Cumulative medical cost,2260,80,"-2277.41 (-4033.18, -521.65)","-0.32 (-0.57, -0.07)",4553.52 (7074.04),895.80,2.02 (1.34),1909.493,0.011,0.051
+us_weighted,Supplementary Tables 20-21,f1,Cumulative cost (USD),Cumulative total cost,2260,80,"-1384.68 (-3493.84, 724.48)","-0.17 (-0.42, 0.09)",6077.33 (8357.43),1076.10,1.60 (1.00),2339.809,0.198,0.373
+us_weighted,Supplementary Tables 20-21,f1,Utilization,Psychiatric hospital days,2260,80,"0.52 (-0.06, 1.10)","0.23 (-0.03, 0.50)",0.49 (2.22),0.30,1.78 (1.00),0.681,0.081,0.199
+us_weighted,Supplementary Tables 20-21,f1,Utilization,Medical hospital days,2260,80,"-0.57 (-1.06, -0.08)","-0.31 (-0.57, -0.04)",0.49 (1.85),0.25,1.98 (1.24),0.418,0.024,0.079
+us_weighted,Supplementary Tables 20-21,f1,Utilization,Total hospital days,2260,80,"-0.06 (-0.82, 0.70)","-0.02 (-0.29, 0.24)",0.99 (2.87),0.39,1.16 (1.00),0.814,0.878,0.906
+us_weighted,Supplementary Tables 20-21,f1,Utilization,Psychiatric appointments,2260,80,"-1.17 (-1.96, -0.38)","-0.37 (-0.61, -0.12)",2.84 (3.20),0.40,2.14 (1.47),0.792,0.004,0.032
+us_weighted,Supplementary Tables 20-21,f1,Utilization,Medical appointments,2260,80,"-2.69 (-8.27, 2.88)","-0.11 (-0.34, 0.12)",17.44 (24.55),2.85,1.45 (1.00),7.888,0.344,0.492
+us_weighted,Supplementary Tables 20-21,f1,Utilization,Total appointments,2260,80,"-4.04 (-9.73, 1.65)","-0.16 (-0.38, 0.07)",20.28 (25.28),2.90,1.58 (1.00),8.132,0.164,0.350
+us_weighted,Supplementary Tables 20-21,f1,Engagement,Number of psychiatric appointment no-shows,2260,80,"-0.07 (-0.26, 0.12)","-0.09 (-0.36, 0.17)",0.35 (0.71),0.10,1.40 (1.00),0.137,0.487,0.623
+us_weighted,Supplementary Tables 20-21,f1,Composite,Number of any of 4 negative outcomes,2260,80,"-0.21 (-0.39, -0.02)","-0.28 (-0.53, -0.03)",0.66 (0.73),0.09,1.90 (1.20),0.222,0.027,0.079
+us_weighted,Supplementary Tables 20-21,f1,Composite,Number of any of 6 negative outcomes,2260,80,"-0.33 (-0.57, -0.08)","-0.33 (-0.58, -0.08)",1.12 (0.99),0.13,2.04 (1.37),0.319,0.009,0.051

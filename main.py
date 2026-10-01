@@ -1,18 +1,18 @@
-"""Build every output table from the simulated data in data/.
-
-    python main.py
+"""
+Central main execution script to run all analyses.
 """
 
 import time
 
 import expert_study
+import forest_plot
 import regression
 import tables_descriptive
 
-
-STEPS = [("Tables 1 and 2", tables_descriptive.main),
-         ("Tables 3 and 4 plus Supplementary Tables 1 to 10", regression.main),
-         ("expert-rating sub-study", expert_study.main)]
+STEPS = [("Table 1 and Supplementary Table 23", tables_descriptive.main),
+         ("Tables 2-3 and Supplementary Tables 1-18, 20-21", regression.main),
+         ("Table 4: expert-rated appropriateness", expert_study.main),
+         ("Figure 1: forest plot", forest_plot.main)]
 
 
 def main():

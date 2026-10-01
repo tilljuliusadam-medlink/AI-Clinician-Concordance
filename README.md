@@ -1,47 +1,38 @@
 # Replication package: AI-clinician treatment concordance and 12-month outcomes
 
-Simulated data and the analysis code behind the tables in "Higher clinician concordance with AI psychiatric treatment recommendations is associated with superior 12-month health outcomes."
-
 ## The data are simulated
 
-Every value in `data/` came from a seeded random number generator. Outcomes were generated
-independently of the treatment decisions, so the simulated association between concordance and every outcome is exactly zero. Any estimate in `results/` is sampling noise, never a study result. The published findings with aggregated statistics are in the manuscript. 
+Every value in `data/` comes from a seeded random number generator with invented parameters; nothing is derived
+from patient data. The real electronic health record data are held inside the Mayo Clinic Platform and cannot be
+redistributed. The AI clinical decision support system Comentra™ is proprietary and none of its code appears here.
 
-The AI clinical decision support system is proprietary and none of it appears here: no source code, prompts, knowledge-base content, retrieval configuration or base model. The real electronic health record data are held inside the Mayo Clinic Platform and cannot be redistributed.
+The simulation plants a known effect to mimic main analyses effects. 
+The expert ratings carry no planted effect: any group difference in Table 4 is sampling noise. 
+The planted values are invented and say nothing about the study's findings, which are reported in the manuscript.
 
 ## Run it
-
 ```bash
 pip install -r requirements.txt
 python main.py
 ```
 
-Verified on Python 3.11.9 with the package versions in `requirements.txt` (numpy 2.4.4, pandas 2.3.3, scipy 1.16.3, statsmodels 0.14.6).
+Verified on Python 3.11.9 with the package versions in `requirements.txt`. Runtime is about 75 seconds on a laptop:
+about 40 seconds for the 295 mixed-effects regressions and about 30 seconds for the expert-study models. Every
+estimator is deterministic, so a run reproduces the CSV files in `results/`.
 
-Runtime is 1 to 2 minutes on a laptop, nearly all of it in `expert_study.py`, whose crossed mixed models are fitted by numerical optimization. `tables_descriptive.py` and `regression.py` together finish in about 2 seconds. Progress prints as each table is written.
+## The analysis in brief
 
-The run writes 11 CSV files to `results/`. The copies shipped in `results/` were produced by that same command: the data are a fixed committed file and every estimator is seeded, so a correct run reproduces all 11 files byte for byte.
-
-## What is here
-
-| File | Contents |
-|---|---|
-| `data/simulated_cohort.csv` | simulated data of 2000 patients, three rows each: `pre_visit`, `decision_point`, `followup` |
-| `data/simulated_expert_ratings.csv` | 300 cases, each rated independently by 2 of 10 psychiatrists |
-| `data/data_dictionary.csv` | all 82 columns of both files |
-
-| Script | Writes to `results/` | Manuscript |
-|---|---|---|
-| `tables_descriptive.py` | `table1_baseline_characteristics.csv`, `table2_concordance_metrics.csv` | Tables 1 and 2 |
-| `regression.py` | `table3_binary_regressions.csv`, `table4_continuous_regressions.csv` | Tables 3 and 4, Supplementary Tables 1 to 10 |
-| `expert_study.py` | `expert_t1_sample.csv` to `expert_t7_sensitivity.csv` | Expert-rated appropriateness sub-study |
-
-`config.py` holds every roster, covariate and analysis block. `derive.py` turns the three-row
-panel into the one-row-per-patient analytic table, including the concordance metrics. `stats.py`
-and `agreement.py` hold the shared estimators.
-
-## License
-
-MIT, see [LICENSE](LICENSE). It covers the code and the simulated data in this repository. It
-does not extend to the AI clinical decision support system, which is proprietary and, as stated
-above, appears nowhere here.
+1. Concordance: per patient, each of the 20 treatment options is one cell of a single two-by-two table (Comentra™ yes/no x
+   clinician yes/no). F1 is undefined without a true positive.
+2. Models: one logistic (binary outcomes; GPBoost, Laplace maximum likelihood) or linear (continuous outcomes;
+   statsmodels MixedLM, restricted maximum likelihood) mixed-effects model per outcome, with the concordance metric
+   as independent variable and one random intercept per clinician. Covariates: sex, age, race, Comentra™ response
+   confidence, the number of options chosen by Comentra™ and by the clinician, available follow-up months (not for
+   mortality), and outcome-specific psychiatric / medical diagnosis counts and pre-index values of the outcome.
+3. Blocks: the main F1 analysis; severe mental illness and three narrower subgroups; primary psychiatric and
+   primary medical diagnosis; balanced accuracy, PABAK and MCC as the concordance metric; US-population weighting
+   (GPBoost with post-stratification weights by age, sex and race). Benjamini-Hochberg correction within each
+   block.
+4. Expert sub-study: low versus medium/high concordance and negative versus non-negative outcome, compared with
+   linear and logistic mixed models with crossed random intercepts for case and reviewer, Welch's t-test, Cohen's d
+   and Fisher's exact test.

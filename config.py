@@ -1,230 +1,189 @@
-"""Constants for the replication package.
-
-Every roster, covariate list and analysis block used by the paper lives here so
-that a reader can see the whole analytical surface in one file. Labels and time
-windows are quoted from the manuscript verbatim.
+"""
+Configuration file for the simulated analysis reproduction.
 """
 
+import re
+from collections import namedtuple
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 RESULTS_DIR = BASE_DIR / "results"
-
 COHORT_CSV = DATA_DIR / "simulated_cohort.csv"
 RATINGS_CSV = DATA_DIR / "simulated_expert_ratings.csv"
-
-# Smallest sample a single outcome regression may be fit on. Below this the
-# outcome is skipped for that block rather than fitted on a handful of rows.
-MIN_FIT_N = 10
-
 TIMEPOINTS = ["pre_visit", "decision_point", "followup"]
 
 # ---------------------------------------------------------------------------
-# Exposure: the treatment options
+# Exposure: concordance over 20 treatment options
 # ---------------------------------------------------------------------------
-# Concordance is computed FLAT across every treatment option at once. The AI
-# recommendation and the clinician decision are recorded per option, the whole
-# set forms ONE two-by-two table per patient, and every metric follows from it.
-# There is no grouping into drug families first and no averaging of per-family
-# scores: that would be a different quantity.
+# Every option contributes one cell to ONE two-by-two table per patient (Comentra™ yes/no x clinician yes/no); every
+# concordance metric follows from that table. 
 TREATMENT_OPTIONS = [
-    "ssri", "atypical_antidepressant", "snri", "tca", "maoi",
-    "sga_excl_clozapine", "clozapine", "fga",
-    "mood_stabilizer",
-    "benzodiazepine", "z_drug",
-    "stimulant", "nonstimulant_adhd",
-    "cbt", "dbt", "act", "emdr", "other_psychotherapy",
+    "ssri", "snri", "atypical_antidepressant", "tca", "maoi", "mood_stabilizer",
+    "sga_excl_clozapine", "clozapine", "fga", "anxiolytic_sedative", "stimulant_adhd",
+    "glutamatergic", "cognitive_enhancer", "addiction_medication",
+    "cbt", "dbt", "act", "emdr", "other_psychotherapy", "neurostimulation",
 ]
-
-# Table 1 also reports the drug families. They are DERIVED from the options
-# above (a family is present when any of its options is), never stored, so a
-# family cannot disagree with its own members.
 TREATMENT_FAMILIES = {
-    "antidepressant": ["ssri", "atypical_antidepressant", "snri", "tca",
-                       "maoi"],
+    "antidepressant": ["ssri", "snri", "atypical_antidepressant", "tca", "maoi"],
     "antipsychotic": ["sga_excl_clozapine", "clozapine", "fga"],
     "sga": ["sga_excl_clozapine", "clozapine"],
-    "anxiolytic_hypnotic": ["benzodiazepine", "z_drug"],
     "psychotherapy": ["cbt", "dbt", "act", "emdr", "other_psychotherapy"],
 }
+CONCORDANCE_METRICS = ["f1", "balanced_accuracy", "pabak", "mcc"]
+EXPOSURE = "concordance"
+DIAGNOSES = [("dx_anxiety", "Anxiety disorders"), ("dx_adhd", "Attention-deficit/hyperactivity disorder"),
+             ("dx_bipolar", "Bipolar-spectrum disorders"), ("dx_depressive", "Depressive disorders"),
+             ("dx_psychotic", "Psychosis-spectrum disorders"), ("dx_ocd", "Obsessive-compulsive disorders"),
+             ("dx_ptsd", "Posttraumatic stress disorder")]
 
 # ---------------------------------------------------------------------------
-# Covariates (Methods: sex, age, race, number of psychiatric diagnoses, months
-# to follow-up, AI response-confidence level)
+# Covariates. Every model: sex, age, race, Comentra™ response confidence, and the number of options chosen by
+# Comentra™ and by the clinician (UNIVERSAL); available follow-up months (FU; not for mortality); and outcome-specific
+# severity terms: the psychiatric (PSY) and / or medical (MED) diagnosis count and the pre-index value of the
+# outcome.
 # ---------------------------------------------------------------------------
-COVARIATES = [
-    "sex",
-    "age_years",
-    "race",
-    "n_psychiatric_diagnoses",
-    "months_to_followup",
-    "ai_confidence_level",
+UNIVERSAL = ("C(sex, Treatment('Male')) + age_years + C(race, Treatment('White')) "
+             "+ C(ai_confidence_level, Treatment('high')) + n_treatments_ai + n_treatments_clinician")
+MACROS = {"UNIVERSAL": UNIVERSAL, "PSY": "n_psychiatric_diagnoses", "MED": "n_medical_diagnoses",
+          "FU": "np.log1p(followup_months)"}
+
+
+def expand(formula):
+    """Replace the macros of a roster formula by the columns they stand for."""
+    return re.sub(r"\b(" + "|".join(MACROS) + r")\b", lambda m: MACROS[m.group(1)], formula)
+
+
+# ---------------------------------------------------------------------------
+# Outcomes: one model per row of manuscript Tables 2 (binary, logistic) and 3 (continuous, linear), table order.
+# ---------------------------------------------------------------------------
+Model = namedtuple("Model", "name kind domain label formula gate")
+
+
+def binary(name, domain, label, formula, gate=None):
+    return Model(name, "binary", domain, label, formula, gate)
+
+
+def continuous(name, domain, label, formula):
+    return Model(name, "continuous", domain, label, formula, None)
+
+
+BINARY_MODELS = [
+    binary("acute_psych", "Acute care", "Psychiatric ER visit/hospitalization",
+           "fu_acute_psych ~ concordance + pre_acute_psych + PSY + UNIVERSAL + FU"),
+    binary("er_psych", "Acute care", "Psychiatric ER visit",
+           "fu_er_psych ~ concordance + pre_er_psych + PSY + UNIVERSAL + FU"),
+    binary("hosp_psych", "Acute care", "Psychiatric hospitalization",
+           "fu_hosp_psych ~ concordance + pre_hosp_psych + PSY + UNIVERSAL + FU"),
+    binary("acute_med", "Acute care", "Medical ER visit/hospitalization",
+           "fu_acute_med ~ concordance + pre_acute_med + MED + UNIVERSAL + FU"),
+    binary("er_med", "Acute care", "Medical ER visit",
+           "fu_er_med ~ concordance + pre_er_med + MED + UNIVERSAL + FU"),
+    binary("hosp_med", "Acute care", "Medical hospitalization",
+           "fu_hosp_med ~ concordance + pre_hosp_med + MED + UNIVERSAL + FU"),
+    binary("acute_any", "Acute care", "Any ER visit/hospitalization",
+           "fu_acute_any ~ concordance + pre_acute_any + PSY + MED + UNIVERSAL + FU"),
+    binary("er_any", "Acute care", "Any ER visit",
+           "fu_er_any ~ concordance + pre_er_any + PSY + MED + UNIVERSAL + FU"),
+    binary("hosp_any", "Acute care", "Any hospitalization",
+           "fu_hosp_any ~ concordance + pre_hosp_any + PSY + MED + UNIVERSAL + FU"),
+    binary("suicidal_any_onset", "Suicidality", "Onset of suicidal thoughts/behaviors",
+           "fu_suicidal_any ~ concordance + pre_suicidal_any + PSY + UNIVERSAL + FU", "dp_suicidal_any == 0"),
+    binary("suicidal_thoughts_onset", "Suicidality", "Onset of suicidal thoughts",
+           "fu_suicidal_thoughts ~ concordance + pre_suicidal_thoughts + PSY + UNIVERSAL + FU",
+           "dp_suicidal_thoughts == 0"),
+    binary("suicidal_behavior_onset", "Suicidality", "Onset of suicidal behaviors",
+           "fu_suicidal_behavior ~ concordance + pre_suicidal_behavior + PSY + UNIVERSAL + FU",
+           "dp_suicidal_behavior == 0"),
+    binary("suicidal_any_remission", "Suicidality", "Remission of suicidal thoughts/behaviors",
+           "fu_suicidal_any_remission ~ concordance + pre_suicidal_any + PSY + UNIVERSAL + FU",
+           "dp_suicidal_any == 1"),
+    binary("suicidal_thoughts_remission", "Suicidality", "Remission of suicidal thoughts",
+           "fu_suicidal_thoughts_remission ~ concordance + pre_suicidal_thoughts + PSY + UNIVERSAL + FU",
+           "dp_suicidal_thoughts == 1"),
+    binary("suicidal_behavior_remission", "Suicidality", "Remission of suicidal behaviors",
+           "fu_suicidal_behavior_remission ~ concordance + pre_suicidal_behavior + PSY + UNIVERSAL + FU",
+           "dp_suicidal_behavior == 1"),
+    binary("nonadherence", "Engagement", "Psychotropic medication nonadherence",
+           "fu_nonadherence ~ concordance + pre_nonadherence + PSY + UNIVERSAL + FU"),
+    binary("noshow_any", "Engagement", "Psychiatric appointment no-show",
+           "fu_noshow_any ~ concordance + pre_noshow_count + PSY + UNIVERSAL + FU"),
+    binary("death", "Mortality", "All-cause mortality",
+           "fu_death ~ concordance + pre_suicidal_behavior + PSY + MED + UNIVERSAL"),
+    binary("composite4", "Composite", "Any of 4 negative outcomes",
+           "fu_composite4_any ~ concordance + pre_composite4_types + PSY + MED + UNIVERSAL + FU"),
+    binary("composite6", "Composite", "Any of 6 negative outcomes",
+           "fu_composite6_any ~ concordance + pre_composite6_types + PSY + MED + UNIVERSAL + FU"),
 ]
-CATEGORICAL_COVARIATES = ["sex", "race", "ai_confidence_level"]
-
-# Reference level of each categorical covariate, pinned here rather than left
-# to alphabetical order. A rare category can vanish from one listwise-deleted
-# sample, which would silently move that row's reference level away from the
-# one every other row uses.
-COVARIATE_REFERENCE = {
-    "sex": "Female",
-    "race": "African American",
-    "ai_confidence_level": "high",
-}
-
-DIAGNOSIS_FLAGS = [
-    "dx_anxiety", "dx_depressive", "dx_adhd",
-    "dx_bipolar", "dx_psychotic", "dx_ocd",
+CONTINUOUS_MODELS = [
+    continuous("cost_psych", "Cumulative cost (USD)", "Cumulative psychiatric cost",
+               "fu_cost_psych ~ concordance + pre_cost_psych + PSY + UNIVERSAL + FU"),
+    continuous("cost_med", "Cumulative cost (USD)", "Cumulative medical cost",
+               "fu_cost_med ~ concordance + pre_cost_med + MED + UNIVERSAL + FU"),
+    continuous("cost_total", "Cumulative cost (USD)", "Cumulative total cost",
+               "fu_cost_total ~ concordance + pre_cost_total + PSY + MED + UNIVERSAL + FU"),
+    continuous("hosp_days_psych", "Utilization", "Psychiatric hospital days",
+               "fu_hosp_days_psych ~ concordance + pre_hosp_days_psych + PSY + UNIVERSAL + FU"),
+    continuous("hosp_days_med", "Utilization", "Medical hospital days",
+               "fu_hosp_days_med ~ concordance + pre_hosp_days_med + MED + UNIVERSAL + FU"),
+    continuous("hosp_days_total", "Utilization", "Total hospital days",
+               "fu_hosp_days_total ~ concordance + pre_hosp_days_total + PSY + MED + UNIVERSAL + FU"),
+    continuous("appts_psych", "Utilization", "Psychiatric appointments",
+               "fu_appts_psych ~ concordance + pre_appts_psych + PSY + UNIVERSAL + FU"),
+    continuous("appts_med", "Utilization", "Medical appointments",
+               "fu_appts_med ~ concordance + pre_appts_med + MED + UNIVERSAL + FU"),
+    continuous("appts_total", "Utilization", "Total appointments",
+               "fu_appts_total ~ concordance + pre_appts_total + PSY + MED + UNIVERSAL + FU"),
+    continuous("noshow_count", "Engagement", "Number of psychiatric appointment no-shows",
+               "fu_noshow_count ~ concordance + pre_noshow_count + PSY + UNIVERSAL + FU"),
+    continuous("composite4_count", "Composite", "Number of any of 4 negative outcomes",
+               "fu_composite4_types ~ concordance + pre_composite4_types + PSY + MED + UNIVERSAL + FU"),
+    continuous("composite6_count", "Composite", "Number of any of 6 negative outcomes",
+               "fu_composite6_types ~ concordance + pre_composite6_types + PSY + MED + UNIVERSAL + FU"),
 ]
-
-# Status variables recorded at every timepoint. At pre_visit they mean "at any
-# point in the 12 months before the decision point", which is the window Table 3
-# uses for every acute-care denominator.
-STATUS_COLUMNS = [
-    "suicidal_thoughts",
-    "suicidal_behavior",
-    "er_visit_psychiatric",
-    "hospitalization_psychiatric",
-    "er_visit_medical",
-    "hospitalization_medical",
-    "appointment_no_show",
-    "treatment_nonadherence",
-]
-
-# The manuscript uses a THREE-month window in exactly two places, both distinct
-# from the 12-month outcome denominators: identifying a decision-point month,
-# and the Table 2 concordance subgroup "Hospitalization/ER visit in the last 3
-# months". It is therefore its own column.
-ACUTE_CARE_3MO = "acute_care_last_3_months"
+# The three narrower severe-mental-illness subgroups are fitted on the collapsed outcomes only.
+COLLAPSED = {"acute_psych", "acute_med", "acute_any", "suicidal_any_onset", "suicidal_any_remission",
+             "nonadherence", "death", "composite4", "composite6",
+             "cost_psych", "hosp_days_psych", "composite4_count", "composite6_count"}
 
 # ---------------------------------------------------------------------------
-# Outcomes. Labels are the manuscript's Table 3 and Table 4 wording verbatim.
+# Analysis blocks and BH-correction
 # ---------------------------------------------------------------------------
-# (name, label, rule, follow-up column, baseline column). Rules:
-#   event     -- the follow-up status, across the whole analytic sample
-#   onset     -- follow-up status among patients negative at baseline
-#   remission -- absence at follow-up among patients positive at baseline
-#   relapse   -- follow-up status among patients positive at baseline
-BINARY_OUTCOMES = [
-    ("death", "All-cause mortality",
-     "event", "fu_death", None),
-    ("suicidal_thoughts_onset",
-     "Onset of suicidal thoughts in patients with no suicidal thoughts at "
-     "baseline",
-     "onset", "fu_suicidal_thoughts", "dp_suicidal_thoughts"),
-    ("suicidal_behavior_onset",
-     "Onset of suicidal behaviors in patients with no suicidal behaviors at "
-     "baseline",
-     "onset", "fu_suicidal_behavior", "dp_suicidal_behavior"),
-    ("suicidal_thoughts_remission",
-     "Remission of suicidal thoughts in patients with suicidal thoughts at "
-     "baseline",
-     "remission", "fu_suicidal_thoughts", "dp_suicidal_thoughts"),
-    ("suicidal_behavior_remission",
-     "Remission of suicidal behaviors in patients with suicidal behaviors at "
-     "baseline",
-     "remission", "fu_suicidal_behavior", "dp_suicidal_behavior"),
-    # Denominator is the SAME event type, not any psychiatric acute care.
-    ("er_visit_psychiatric_onset",
-     "Psychiatric ER visit in patients with no recent psychiatric ER visit "
-     "(12 months)",
-     "onset", "fu_er_visit_psychiatric", "pre_er_visit_psychiatric"),
-    ("hospitalization_psychiatric_onset",
-     "Psychiatric hospitalization in patients with no recent psychiatric "
-     "hospitalization (12 months)",
-     "onset", "fu_hospitalization_psychiatric",
-     "pre_hospitalization_psychiatric"),
-    ("acute_care_medical_onset",
-     "Medical hospitalization/ER visit in patients with no recent medical "
-     "hospitalization/ER visit (12 months)",
-     "onset", "fu_acute_care_medical", "pre_acute_care_medical"),
-    ("acute_care_psychiatric_relapse",
-     "Psychiatric re-hospitalization/repeated ER visit in patients with recent "
-     "psychiatric hospitalization/ER visit (12 months)",
-     "relapse", "fu_acute_care_psychiatric", "pre_acute_care_psychiatric"),
-    ("acute_care_medical_relapse",
-     "Medical re-hospitalization/repeated ER visit in patients with recent "
-     "medical hospitalization/ER visit (12 months)",
-     "relapse", "fu_acute_care_medical", "pre_acute_care_medical"),
-    # "prior" with no window: any no-show or nonadherence before the decision
-    # point, however long ago.
-    ("appointment_no_show_onset",
-     "Appointment no-shows in patients with no prior no-shows",
-     "onset", "fu_appointment_no_show", "pre_appointment_no_show"),
-    ("nonadherence_onset",
-     "Treatment nonadherence in patients with no prior nonadherence",
-     "onset", "fu_treatment_nonadherence", "pre_treatment_nonadherence"),
-    ("composite_adverse",
-     "Composite of adverse events (death, suicidality, hospitalization, "
-     "ER visit)",
-     "event", "fu_composite_adverse", None),
-]
-
-CONTINUOUS_OUTCOMES = [
-    ("cost_psychiatric_usd",
-     "Cumulative healthcare cost related to psychiatric diagnoses"),
-    ("cost_medical_usd",
-     "Cumulative healthcare cost related to medical diagnoses"),
-    ("cost_total_usd", "Cumulative healthcare cost overall"),
-    ("hospital_days_psychiatric",
-     "Cumulative days of hospitalization related to psychiatric diagnoses"),
-    ("hospital_days_medical",
-     "Cumulative days of hospitalization related to medical diagnoses"),
-    ("appointments_psychiatric",
-     "Number of appointments for psychiatric diagnoses"),
-    ("appointments_medical", "Number of appointments for medical diagnoses"),
-]
-
-# ---------------------------------------------------------------------------
-# The six analysis blocks. One routine runs all of them.
-# ---------------------------------------------------------------------------
+Block = namedtuple("Block", "name metric subset roster weighted tables")
 BLOCKS = [
-    dict(name="f1_full", metric="f1", subgroup=None, weighted=False,
-         tables="Table 3 / Table 4"),
-    dict(name="balacc_full", metric="balanced_accuracy", subgroup=None,
-         weighted=False, tables="Supplementary Table 1 / 2"),
-    dict(name="pabak_full", metric="pabak", subgroup=None, weighted=False,
-         tables="Supplementary Table 3 / 4"),
-    dict(name="f1_primary_psychiatric", metric="f1", subgroup="psychiatric",
-         weighted=False, tables="Supplementary Table 5 / 6"),
-    dict(name="f1_primary_medical", metric="f1", subgroup="medical",
-         weighted=False, tables="Supplementary Table 7 / 8"),
-    dict(name="f1_us_weighted", metric="f1", subgroup=None, weighted=True,
-         tables="Supplementary Table 9 / 10"),
+    Block("f1_main", "f1", None, "all", False, "Tables 2-3"),
+    Block("smi", "f1", "smi", "all", False, "Supplementary Tables 1-2"),
+    Block("smi_plus1", "f1", "smi_plus1", "collapsed", False, "Supplementary Tables 3-4"),
+    Block("smi_plus2", "f1", "smi_plus2", "collapsed", False, "Supplementary Tables 5-6"),
+    Block("smi_acute", "f1", "smi_acute", "collapsed", False, "Supplementary Tables 7-8"),
+    Block("primary_psychiatric", "f1", "primary_dx_psychiatric", "all", False, "Supplementary Tables 9-10"),
+    Block("primary_medical", "f1", "primary_dx_medical", "all", False, "Supplementary Tables 11-12"),
+    Block("balanced_accuracy", "balanced_accuracy", None, "all", False, "Supplementary Tables 13-14"),
+    Block("pabak", "pabak", None, "all", False, "Supplementary Tables 15-16"),
+    Block("mcc", "mcc", None, "all", False, "Supplementary Tables 17-18"),
+    Block("us_weighted", "f1", None, "all", True, "Supplementary Tables 20-21"),
 ]
+MIN_EVENTS = 10
+MAX_ITERATIONS = 1000
 
-# ---------------------------------------------------------------------------
-# Post-stratification targets: published 2022 American Community Survey
-# marginals for the US adult population. Public data, quoted not derived.
-# Race shares are renormalised across the four matchable categories.
-# ---------------------------------------------------------------------------
+# US-population weighting
 US_POP_TARGETS = {
     "sex": {"Male": 0.491, "Female": 0.509},
     "age_group": {"18-29": 0.217, "30-44": 0.261, "45-64": 0.313, "65+": 0.209},
-    "race": {"White": 0.746, "African American": 0.168,
-             "Asian": 0.075, "Native American or Pacific Islander": 0.011},
+    "race": {"White": 0.746, "African American": 0.168, "Asian": 0.075,
+             "Native American or Pacific Islander": 0.011},
 }
-WEIGHTABLE_RACES = list(US_POP_TARGETS["race"])
 
 # ---------------------------------------------------------------------------
-# Post-hoc expert-rated clinical appropriateness sub-study
+# Expert-rated clinical appropriateness sub-study (manuscript Table 4)
 # ---------------------------------------------------------------------------
-RATING_LEVELS = (1, 2, 3, 4)
-RATERS_PER_CASE = 2     # every case is rated by exactly two of the reviewers
-COMPLEXITY_ORDER = {"low": 1, "middle": 2, "high": 3}
-SELECTION_ARMS = ["discordant_bad_outcome", "high_concordance_no_bad_outcome"]
+EXPERT_CASES, EXPERT_REVIEWERS, RATERS_PER_CASE = 120, 8, 2
+EXPERT_BANDS = {"low": 60, "medium": 30, "high": 30}
+NOT_APPROPRIATE = 0
+EXPERT_DOMAINS = [("rating_treatment_plan", "Treatment plan"),
+                  ("rating_medication_subclass", "Medication sub-class")]
 
-NI_MARGIN = -0.5        # points on the 1-4 appropriateness scale
-CI_NONINFERIORITY = 0.95
-CI_SUPERIORITY = 0.975
-RUSHED_SECONDS = 120    # sensitivity analysis exclusion threshold
-BOOTSTRAP_N = 2000
-SEED = 20260727         # seeds the bootstrap resampling in agreement.py
-
-EXPERT_ENDPOINTS = [
-    ("treatment", "approp_treatment_clinician", "approp_treatment_ai",
-     "choice_treatment"),
-    ("diagnostic", "approp_diagnostic_clinician", "approp_diagnostic_ai",
-     "choice_diagnostic"),
-]
+EXPERT_GROUPS = {"low": "Low concordance (F1-score<0.5)",
+                 "med_high": "Medium/High concordance (F1-score>=0.5)",
+                 "negative": "Negative outcome", "non_negative": "Non-negative outcome"}
+EXPERT_COMPARISONS = [("low", "med_high"), ("negative", "non_negative")]

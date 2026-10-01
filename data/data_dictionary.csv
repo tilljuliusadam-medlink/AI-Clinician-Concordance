@@ -1,83 +1,89 @@
-file,column,dtype,recorded_at,description
-simulated_cohort.csv,patient_id,int64,every timepoint,Simulated patient identifier.
-simulated_cohort.csv,timepoint,object,every timepoint,"pre_visit, decision_point or followup."
-simulated_cohort.csv,months_from_decision,int64,every timepoint,"Months relative to the decision point. At pre_visit, when the most recent prior psychiatric visit occurred (-1 to -12). Zero at the decision point. At followup, the follow-up interval, which is also a model covariate."
-simulated_cohort.csv,age_years,int64,every timepoint,Age in years at the decision point.
-simulated_cohort.csv,sex,object,every timepoint,Female or Male.
-simulated_cohort.csv,race,object,every timepoint,Race category.
-simulated_cohort.csv,ethnicity,object,every timepoint,"Hispanic/Latino, or not."
-simulated_cohort.csv,education,object,every timepoint,Highest completed education.
-simulated_cohort.csv,bmi,float64,decision_point only,Body mass index.
-simulated_cohort.csv,dx_anxiety,float64,decision_point only,1 if anxiety disorder is recorded.
-simulated_cohort.csv,dx_depressive,float64,decision_point only,1 if depressive disorder is recorded.
-simulated_cohort.csv,dx_adhd,float64,decision_point only,1 if adhd disorder is recorded.
-simulated_cohort.csv,dx_bipolar,float64,decision_point only,1 if bipolar disorder is recorded.
-simulated_cohort.csv,dx_psychotic,float64,decision_point only,1 if psychotic disorder is recorded.
-simulated_cohort.csv,dx_ocd,float64,decision_point only,1 if ocd disorder is recorded.
-simulated_cohort.csv,n_psychiatric_diagnoses,float64,decision_point only,Total number of psychiatric diagnoses; a model covariate and a measure of complexity.
-simulated_cohort.csv,medical_comorbidity,float64,decision_point only,1 if any non-psychiatric condition is recorded.
-simulated_cohort.csv,primary_diagnosis_category,object,decision_point only,psychiatric or medical; defines the two subgroup analyses.
-simulated_cohort.csv,ai_confidence_level,object,decision_point only,"AI response-confidence level: high, medium or low. A model covariate."
-simulated_cohort.csv,ai_recommends_ssri,float64,decision_point only,1 if the AI recommended ssri.
-simulated_cohort.csv,ai_recommends_atypical_antidepressant,float64,decision_point only,1 if the AI recommended atypical antidepressant.
-simulated_cohort.csv,ai_recommends_snri,float64,decision_point only,1 if the AI recommended snri.
-simulated_cohort.csv,ai_recommends_tca,float64,decision_point only,1 if the AI recommended tca.
-simulated_cohort.csv,ai_recommends_maoi,float64,decision_point only,1 if the AI recommended maoi.
-simulated_cohort.csv,ai_recommends_sga_excl_clozapine,float64,decision_point only,1 if the AI recommended sga excl clozapine.
-simulated_cohort.csv,ai_recommends_clozapine,float64,decision_point only,1 if the AI recommended clozapine.
-simulated_cohort.csv,ai_recommends_fga,float64,decision_point only,1 if the AI recommended fga.
-simulated_cohort.csv,ai_recommends_mood_stabilizer,float64,decision_point only,1 if the AI recommended mood stabilizer.
-simulated_cohort.csv,ai_recommends_benzodiazepine,float64,decision_point only,1 if the AI recommended benzodiazepine.
-simulated_cohort.csv,ai_recommends_z_drug,float64,decision_point only,1 if the AI recommended z drug.
-simulated_cohort.csv,ai_recommends_stimulant,float64,decision_point only,1 if the AI recommended stimulant.
-simulated_cohort.csv,ai_recommends_nonstimulant_adhd,float64,decision_point only,1 if the AI recommended nonstimulant adhd.
-simulated_cohort.csv,ai_recommends_cbt,float64,decision_point only,1 if the AI recommended cbt.
-simulated_cohort.csv,ai_recommends_dbt,float64,decision_point only,1 if the AI recommended dbt.
-simulated_cohort.csv,ai_recommends_act,float64,decision_point only,1 if the AI recommended act.
-simulated_cohort.csv,ai_recommends_emdr,float64,decision_point only,1 if the AI recommended emdr.
-simulated_cohort.csv,ai_recommends_other_psychotherapy,float64,decision_point only,1 if the AI recommended other psychotherapy.
-simulated_cohort.csv,clinician_chose_ssri,float64,decision_point only,1 if the clinician selected ssri.
-simulated_cohort.csv,clinician_chose_atypical_antidepressant,float64,decision_point only,1 if the clinician selected atypical antidepressant.
-simulated_cohort.csv,clinician_chose_snri,float64,decision_point only,1 if the clinician selected snri.
-simulated_cohort.csv,clinician_chose_tca,float64,decision_point only,1 if the clinician selected tca.
-simulated_cohort.csv,clinician_chose_maoi,float64,decision_point only,1 if the clinician selected maoi.
-simulated_cohort.csv,clinician_chose_sga_excl_clozapine,float64,decision_point only,1 if the clinician selected sga excl clozapine.
-simulated_cohort.csv,clinician_chose_clozapine,float64,decision_point only,1 if the clinician selected clozapine.
-simulated_cohort.csv,clinician_chose_fga,float64,decision_point only,1 if the clinician selected fga.
-simulated_cohort.csv,clinician_chose_mood_stabilizer,float64,decision_point only,1 if the clinician selected mood stabilizer.
-simulated_cohort.csv,clinician_chose_benzodiazepine,float64,decision_point only,1 if the clinician selected benzodiazepine.
-simulated_cohort.csv,clinician_chose_z_drug,float64,decision_point only,1 if the clinician selected z drug.
-simulated_cohort.csv,clinician_chose_stimulant,float64,decision_point only,1 if the clinician selected stimulant.
-simulated_cohort.csv,clinician_chose_nonstimulant_adhd,float64,decision_point only,1 if the clinician selected nonstimulant adhd.
-simulated_cohort.csv,clinician_chose_cbt,float64,decision_point only,1 if the clinician selected cbt.
-simulated_cohort.csv,clinician_chose_dbt,float64,decision_point only,1 if the clinician selected dbt.
-simulated_cohort.csv,clinician_chose_act,float64,decision_point only,1 if the clinician selected act.
-simulated_cohort.csv,clinician_chose_emdr,float64,decision_point only,1 if the clinician selected emdr.
-simulated_cohort.csv,clinician_chose_other_psychotherapy,float64,decision_point only,1 if the clinician selected other psychotherapy.
-simulated_cohort.csv,suicidal_thoughts,int64,every timepoint,Status of suicidal thoughts at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,suicidal_behavior,int64,every timepoint,Status of suicidal behavior at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,er_visit_psychiatric,int64,every timepoint,Status of er visit psychiatric at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,hospitalization_psychiatric,int64,every timepoint,Status of hospitalization psychiatric at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,er_visit_medical,int64,every timepoint,Status of er visit medical at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,hospitalization_medical,int64,every timepoint,Status of hospitalization medical at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,appointment_no_show,int64,every timepoint,Status of appointment no show at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,treatment_nonadherence,int64,every timepoint,Status of treatment nonadherence at this timepoint (0 or 1). At pre_visit this means any occurrence in the 12 months before the decision point.
-simulated_cohort.csv,acute_care_last_3_months,float64,pre_visit only,1 if any hospitalization or ER visit fell in the 3 months before the decision point. Recorded at pre_visit. Used by the Table 2 subgroup 'Hospitalization/ER visit in the last 3 months'; nested inside the 12-month status columns.
-simulated_cohort.csv,death,float64,followup only,1 if the patient died during follow-up.
-simulated_cohort.csv,cost_psychiatric_usd,float64,followup only,"Cumulative follow-up cost for psychiatric diagnoses, US dollars."
-simulated_cohort.csv,cost_medical_usd,float64,followup only,"Cumulative follow-up cost for medical diagnoses, US dollars."
-simulated_cohort.csv,hospital_days_psychiatric,float64,followup only,Cumulative psychiatric hospital days.
-simulated_cohort.csv,hospital_days_medical,float64,followup only,Cumulative medical hospital days.
-simulated_cohort.csv,appointments_psychiatric,float64,followup only,Number of psychiatric appointments.
-simulated_cohort.csv,appointments_medical,float64,followup only,Number of medical appointments.
-simulated_expert_ratings.csv,case_id,int64,one row per case and reviewer,Simulated case identifier in the expert-rating study.
-simulated_expert_ratings.csv,reviewer_id,object,one row per case and reviewer,Identifier of the rating psychiatrist.
-simulated_expert_ratings.csv,selection_arm,object,one row per case and reviewer,Sampling stratum of the rated case.
-simulated_expert_ratings.csv,complexity,object,one row per case and reviewer,"Reviewer-rated case complexity: low, middle or high."
-simulated_expert_ratings.csv,approp_diagnostic_clinician,int64,one row per case and reviewer,"Appropriateness of the clinician diagnostic plan, rated 1 (not appropriate) to 4 (fully appropriate)."
-simulated_expert_ratings.csv,approp_diagnostic_ai,int64,one row per case and reviewer,"Appropriateness of the ai diagnostic plan, rated 1 (not appropriate) to 4 (fully appropriate)."
-simulated_expert_ratings.csv,approp_treatment_clinician,int64,one row per case and reviewer,"Appropriateness of the clinician treatment plan, rated 1 (not appropriate) to 4 (fully appropriate)."
-simulated_expert_ratings.csv,approp_treatment_ai,int64,one row per case and reviewer,"Appropriateness of the ai treatment plan, rated 1 (not appropriate) to 4 (fully appropriate)."
-simulated_expert_ratings.csv,choice_diagnostic,object,one row per case and reviewer,Forced-choice preferred diagnostic assessment.
-simulated_expert_ratings.csv,choice_treatment,object,one row per case and reviewer,Forced-choice preferred treatment plan.
-simulated_expert_ratings.csv,elapsed_seconds,int64,one row per case and reviewer,Seconds between opening and submitting the rating.
+file,column,type,recorded_at,description
+simulated_cohort.csv,patient_id,integer,every timepoint,Simulated patient identifier.
+simulated_cohort.csv,clinician_id,text,every timepoint,Simulated identifier of the clinician who saw the patient at the decision point; the grouping variable of the random intercept.
+simulated_cohort.csv,timepoint,text,every timepoint,"pre_visit, decision_point or followup."
+simulated_cohort.csv,months_from_decision,integer,every timepoint,"-12 at pre_visit (start of the 12-month history window), 0 at the decision point, the available follow-up months (1-12) at followup."
+simulated_cohort.csv,age_years,integer,every timepoint,Age in years at the decision point.
+simulated_cohort.csv,sex,text,every timepoint,Female or Male.
+simulated_cohort.csv,race,text,every timepoint,Race category.
+simulated_cohort.csv,ethnicity,text,every timepoint,"Hispanic or Latino, Not Hispanic or Latino, or Unknown or declined."
+simulated_cohort.csv,education,text,every timepoint,Highest completed education; empty when not recorded.
+simulated_cohort.csv,bmi,float,decision_point only,Body mass index; empty when not recorded.
+simulated_cohort.csv,dx_anxiety,integer,decision_point only,1 if an anxiety disorder is recorded.
+simulated_cohort.csv,dx_depressive,integer,decision_point only,1 if a depressive disorder is recorded.
+simulated_cohort.csv,dx_adhd,integer,decision_point only,1 if attention-deficit/hyperactivity disorder is recorded.
+simulated_cohort.csv,dx_bipolar,integer,decision_point only,1 if a bipolar-spectrum disorder is recorded.
+simulated_cohort.csv,dx_psychotic,integer,decision_point only,1 if a psychosis-spectrum disorder is recorded.
+simulated_cohort.csv,dx_ocd,integer,decision_point only,1 if an obsessive-compulsive disorder is recorded.
+simulated_cohort.csv,dx_ptsd,integer,decision_point only,1 if posttraumatic stress disorder is recorded.
+simulated_cohort.csv,dx_smi,integer,decision_point only,"1 if a severe mental illness is recorded: major depressive disorder, bipolar I/II disorder, schizophrenia or schizoaffective disorder."
+simulated_cohort.csv,n_psychiatric_diagnoses,integer,decision_point only,Number of psychiatric diagnoses; a model covariate.
+simulated_cohort.csv,n_medical_diagnoses,integer,decision_point only,Number of medical diagnosis categories; a model covariate.
+simulated_cohort.csv,charlson_index,integer,decision_point only,Charlson comorbidity index; descriptive only.
+simulated_cohort.csv,primary_dx_psychiatric,integer,decision_point only,1 if a primary psychiatric diagnosis is recorded; defines a sensitivity sample.
+simulated_cohort.csv,primary_dx_medical,integer,decision_point only,1 if a primary medical diagnosis is recorded; defines a sensitivity sample.
+simulated_cohort.csv,ai_confidence_level,text,decision_point only,"Comentra™ response-confidence level: high, medium or low; a model covariate."
+simulated_cohort.csv,ai_input_tokens,integer,decision_point only,Length of the Comentra™ input message in tokens; descriptive only.
+simulated_cohort.csv,ai_recommends_ssri,integer,decision_point only,1 if Comentra™ recommended ssri.
+simulated_cohort.csv,ai_recommends_snri,integer,decision_point only,1 if Comentra™ recommended snri.
+simulated_cohort.csv,ai_recommends_atypical_antidepressant,integer,decision_point only,1 if Comentra™ recommended atypical antidepressant.
+simulated_cohort.csv,ai_recommends_tca,integer,decision_point only,1 if Comentra™ recommended tca.
+simulated_cohort.csv,ai_recommends_maoi,integer,decision_point only,1 if Comentra™ recommended maoi.
+simulated_cohort.csv,ai_recommends_mood_stabilizer,integer,decision_point only,1 if Comentra™ recommended mood stabilizer.
+simulated_cohort.csv,ai_recommends_sga_excl_clozapine,integer,decision_point only,1 if Comentra™ recommended sga excl clozapine.
+simulated_cohort.csv,ai_recommends_clozapine,integer,decision_point only,1 if Comentra™ recommended clozapine.
+simulated_cohort.csv,ai_recommends_fga,integer,decision_point only,1 if Comentra™ recommended fga.
+simulated_cohort.csv,ai_recommends_anxiolytic_sedative,integer,decision_point only,1 if Comentra™ recommended anxiolytic sedative.
+simulated_cohort.csv,ai_recommends_stimulant_adhd,integer,decision_point only,1 if Comentra™ recommended stimulant adhd.
+simulated_cohort.csv,ai_recommends_glutamatergic,integer,decision_point only,1 if Comentra™ recommended glutamatergic.
+simulated_cohort.csv,ai_recommends_cognitive_enhancer,integer,decision_point only,1 if Comentra™ recommended cognitive enhancer.
+simulated_cohort.csv,ai_recommends_addiction_medication,integer,decision_point only,1 if Comentra™ recommended addiction medication.
+simulated_cohort.csv,ai_recommends_cbt,integer,decision_point only,1 if Comentra™ recommended cbt.
+simulated_cohort.csv,ai_recommends_dbt,integer,decision_point only,1 if Comentra™ recommended dbt.
+simulated_cohort.csv,ai_recommends_act,integer,decision_point only,1 if Comentra™ recommended act.
+simulated_cohort.csv,ai_recommends_emdr,integer,decision_point only,1 if Comentra™ recommended emdr.
+simulated_cohort.csv,ai_recommends_other_psychotherapy,integer,decision_point only,1 if Comentra™ recommended other psychotherapy.
+simulated_cohort.csv,ai_recommends_neurostimulation,integer,decision_point only,1 if Comentra™ recommended neurostimulation.
+simulated_cohort.csv,clinician_chose_ssri,integer,decision_point only,1 if the clinician selected ssri.
+simulated_cohort.csv,clinician_chose_snri,integer,decision_point only,1 if the clinician selected snri.
+simulated_cohort.csv,clinician_chose_atypical_antidepressant,integer,decision_point only,1 if the clinician selected atypical antidepressant.
+simulated_cohort.csv,clinician_chose_tca,integer,decision_point only,1 if the clinician selected tca.
+simulated_cohort.csv,clinician_chose_maoi,integer,decision_point only,1 if the clinician selected maoi.
+simulated_cohort.csv,clinician_chose_mood_stabilizer,integer,decision_point only,1 if the clinician selected mood stabilizer.
+simulated_cohort.csv,clinician_chose_sga_excl_clozapine,integer,decision_point only,1 if the clinician selected sga excl clozapine.
+simulated_cohort.csv,clinician_chose_clozapine,integer,decision_point only,1 if the clinician selected clozapine.
+simulated_cohort.csv,clinician_chose_fga,integer,decision_point only,1 if the clinician selected fga.
+simulated_cohort.csv,clinician_chose_anxiolytic_sedative,integer,decision_point only,1 if the clinician selected anxiolytic sedative.
+simulated_cohort.csv,clinician_chose_stimulant_adhd,integer,decision_point only,1 if the clinician selected stimulant adhd.
+simulated_cohort.csv,clinician_chose_glutamatergic,integer,decision_point only,1 if the clinician selected glutamatergic.
+simulated_cohort.csv,clinician_chose_cognitive_enhancer,integer,decision_point only,1 if the clinician selected cognitive enhancer.
+simulated_cohort.csv,clinician_chose_addiction_medication,integer,decision_point only,1 if the clinician selected addiction medication.
+simulated_cohort.csv,clinician_chose_cbt,integer,decision_point only,1 if the clinician selected cbt.
+simulated_cohort.csv,clinician_chose_dbt,integer,decision_point only,1 if the clinician selected dbt.
+simulated_cohort.csv,clinician_chose_act,integer,decision_point only,1 if the clinician selected act.
+simulated_cohort.csv,clinician_chose_emdr,integer,decision_point only,1 if the clinician selected emdr.
+simulated_cohort.csv,clinician_chose_other_psychotherapy,integer,decision_point only,1 if the clinician selected other psychotherapy.
+simulated_cohort.csv,clinician_chose_neurostimulation,integer,decision_point only,1 if the clinician selected neurostimulation.
+simulated_cohort.csv,clinician_chose_stimulant,integer,decision_point only,1 if the clinician selected a stimulant (part of stimulant_adhd); descriptive only.
+simulated_cohort.csv,clinician_chose_nonstimulant_adhd,integer,decision_point only,1 if the clinician selected a non-stimulant ADHD medication (part of stimulant_adhd); descriptive only.
+simulated_cohort.csv,suicidal_thoughts,integer,"pre_visit, decision_point and followup",Suicidal thoughts. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up. decision_point = at the decision point.
+simulated_cohort.csv,suicidal_behavior,integer,"pre_visit, decision_point and followup",Suicidal behavior. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up. decision_point = at the decision point.
+simulated_cohort.csv,er_psych,integer,pre_visit and followup,Psychiatric ER visit. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up.
+simulated_cohort.csv,hosp_psych,integer,pre_visit and followup,Psychiatric hospitalization. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up.
+simulated_cohort.csv,er_med,integer,pre_visit and followup,Medical ER visit. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up.
+simulated_cohort.csv,hosp_med,integer,pre_visit and followup,Medical hospitalization. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up.
+simulated_cohort.csv,nonadherence,integer,pre_visit and followup,Psychotropic medication nonadherence. Status 0/1. pre_visit = any time in the 12 months before the decision point; followup = any time in follow-up.
+simulated_cohort.csv,noshow_count,integer,pre_visit and followup,Number of psychiatric appointment no-shows. At pre_visit the 12 months before the decision point; at followup the available follow-up.
+simulated_cohort.csv,appts_psych,integer,pre_visit and followup,Number of psychiatric appointments attended. At pre_visit the 12 months before the decision point; at followup the available follow-up.
+simulated_cohort.csv,appts_med,integer,pre_visit and followup,Number of medical appointments attended. At pre_visit the 12 months before the decision point; at followup the available follow-up.
+simulated_cohort.csv,hosp_days_psych,integer,pre_visit and followup,Psychiatric hospital days. At pre_visit the 12 months before the decision point; at followup the available follow-up.
+simulated_cohort.csv,hosp_days_med,integer,pre_visit and followup,Medical hospital days. At pre_visit the 12 months before the decision point; at followup the available follow-up.
+simulated_cohort.csv,cost_psych,float,pre_visit and followup,"Cumulative psychiatric healthcare cost, US dollars. At pre_visit the 12 months before the decision point; at followup the available follow-up."
+simulated_cohort.csv,cost_med,float,pre_visit and followup,"Cumulative medical healthcare cost, US dollars. At pre_visit the 12 months before the decision point; at followup the available follow-up."
+simulated_cohort.csv,death,integer,followup only,1 if the patient died during follow-up.
+simulated_expert_ratings.csv,case_id,integer,one row per case and reviewer,Simulated case identifier of the expert-rating sub-study.
+simulated_expert_ratings.csv,reviewer_id,text,one row per case and reviewer,Identifier of the rating psychiatrist (8 reviewers).
+simulated_expert_ratings.csv,concordance_band,text,one row per case and reviewer,"F1 band the case was sampled from: low (F1 < 0.50), medium (0.50-0.75), high (> 0.75)."
+simulated_expert_ratings.csv,negative_outcome,integer,one row per case and reviewer,1 if the case had a negative 12-month outcome.
+simulated_expert_ratings.csv,rating_treatment_plan,integer,one row per case and reviewer,"Appropriateness of the Comentra™ treatment plan:0 Not, 1 Slightly, 2 Moderately, 3 Highly appropriate."
+simulated_expert_ratings.csv,rating_medication_subclass,integer,one row per case and reviewer,"Appropriateness of the Comentra™ medication sub-class choice, same scale; empty when the plan recommends no medication."

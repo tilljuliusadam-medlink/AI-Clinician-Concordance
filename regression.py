@@ -1,260 +1,142 @@
-"""Tables 3 and 4 and Supplementary Tables 1 to 10.
-
-One routine runs all six analysis blocks. Each block fits the 13 binary
-outcomes with logistic regression and the 7 continuous outcomes with linear
-regression, adjusting for the six covariates, then applies Benjamini-Hochberg
-correction across all 20 tests of the block at once.
+"""
+Manuscript Tables 2-3 and Supplementary Tables 1-18 and 20-21.
 """
 
+import gpboost as gpb
 import numpy as np
 import pandas as pd
+import patsy
 import statsmodels.api as sm
 
 import config as cfg
 import derive
 import stats as st
 
-FAILED = "NOT ESTIMATED"
-EXPOSURE = "concordance"
-
-
-def _drop_constant(design):
-    """Drop columns with no variation. The exposure may never be one of them.
-
-    A column carrying a single value cannot be estimated, but dropping the
-    exposure would leave a fitted model whose reported term is a covariate, so
-    that case stops the run instead.
-    """
-    constant = [c for c in design.columns
-                if c != "intercept" and design[c].nunique(dropna=False) <= 1]
-    if EXPOSURE in constant:
-        raise AssertionError(f"'{EXPOSURE}' takes a single value in this "
-                             f"sample, so it cannot be the exposure of a "
-                             f"regression")
-    return design.drop(columns=constant)
-
-
-def build_design(frame, metric):
-    """Intercept, the concordance metric, and the six adjustment covariates."""
-    parts = [pd.Series(1.0, index=frame.index, name="intercept"),
-             frame[metric].rename(EXPOSURE)]
-    for cov in cfg.COVARIATES:
-        if cov in cfg.CATEGORICAL_COVARIATES:
-            dummies = pd.get_dummies(frame[cov], prefix=cov, dtype=float)
-            reference = f"{cov}_{cfg.COVARIATE_REFERENCE[cov]}"
-            if reference not in dummies.columns:
-                raise AssertionError(f"reference level '{reference}' is absent "
-                                     f"from this sample, so '{cov}' would be "
-                                     f"coded against a different baseline than "
-                                     f"in every other row of the table")
-            parts.append(dummies.drop(columns=reference))
-        else:
-            parts.append(pd.to_numeric(frame[cov], errors="coerce").rename(cov))
-    return _drop_constant(pd.concat(parts, axis=1))
-
 
 def block_sample(df, block):
-    """Rows entering one block: subgroup filter, then a computable metric."""
-    sample = df if block["subgroup"] is None \
-        else df[df["subgroup"] == block["subgroup"]]
-    return sample[sample[block["metric"]].notna()].copy()
+    """Patients of one block: its subset, with a computable metric copied into the exposure column."""
+    sample = df if block.subset is None else df[df[block.subset] == 1]
+    sample = sample[sample[block.metric].notna()].copy()
+    sample[cfg.EXPOSURE] = sample[block.metric]
+    return sample
 
 
-def _fit_ready(sample, outcome, metric, weights):
-    """Listwise deletion for one outcome. Returns (y, X, w) or None."""
-    design = build_design(sample, metric)
-    y = pd.to_numeric(sample[outcome], errors="coerce")
-    keep = y.notna() & design.notna().all(axis=1)
-    if keep.sum() < cfg.MIN_FIT_N:
-        return None
-    y, design = y[keep], design[keep]
-    design = _drop_constant(design)
-    w = None if weights is None else weights[keep].to_numpy(float)
-    return y.to_numpy(float), design, w
+def roster(block):
+    return [m for m in cfg.BINARY_MODELS + cfg.CONTINUOUS_MODELS
+            if block.roster == "all" or m.name in cfg.COLLAPSED]
 
 
-def _summary(result):
-    """Coefficient, 95% CI and p for the concordance term, selected by name."""
-    ci = result.conf_int()
-    return float(result.params[EXPOSURE]), float(ci.loc[EXPOSURE, 0]), \
-        float(ci.loc[EXPOSURE, 1]), float(result.pvalues[EXPOSURE])
+def design(sample, model):
+    """Outcome y and fixed-effect design X of one model; rows with a missing value drop (listwise deletion).
 
-
-def _cov_type(weights):
-    """Covariance estimator for one fit.
-
-    Post-stratification weights are sampling weights, not variance weights, so
-    a model-based interval would ignore the uncertainty the weighting design
-    itself carries. Weighted blocks therefore use HC0, the linearization
-    (survey) sandwich; unweighted blocks keep the model-based estimator.
+    A column constant in the sample is dropped (e.g. prior acute care inside the subgroup defined by it); the
+    exposure may never be one of them.
     """
-    return "nonrobust" if weights is None else "HC0"
+    data = sample.query(model.gate) if model.gate else sample
+    y, X = patsy.dmatrices(cfg.expand(model.formula), data, return_type="dataframe", NA_action="drop")
+    X = X.loc[:, (X.nunique() > 1) | (X.columns == "Intercept")]
+    assert cfg.EXPOSURE in X, f"{model.name}: the exposure is constant in this sample"
+    return y.iloc[:, 0], X
 
 
-def _mean_sd(values):
-    values = np.asarray(values, float)
-    values = values[np.isfinite(values)]
-    if len(values) == 0:
-        return "NA"
-    return f"{values.mean():.3f} ({values.std(ddof=1):.3f})"
+def fit_gpboost(y, X, clinicians, likelihood, weights=None):
+    """Random intercept per clinician, GPBoost. Returns (coefficient, SE, intercept variance, residual SD)."""
+    model = gpb.GPModel(group_data=clinicians, likelihood=likelihood, weights=weights, num_parallel_threads=1)
+    model.fit(y=y.to_numpy(float), X=X.to_numpy(float), params={"maxit": cfg.MAX_ITERATIONS})
+    if model._get_num_optim_iter() >= cfg.MAX_ITERATIONS:
+        raise RuntimeError(f"GPBoost did not converge within {cfg.MAX_ITERATIONS} iterations")
+    coef, variances = model.get_coef(std_err=True), model.get_cov_pars()
+    j = X.columns.get_loc(cfg.EXPOSURE)
+    resid_sd = float(np.sqrt(variances["Error_term"].iloc[0])) if "Error_term" in variances else np.nan
+    return _checked(float(coef.iloc[0, j]), float(coef.iloc[1, j]), float(variances["Group_1"].iloc[0]), resid_sd,
+                    max_abs=20 if likelihood == "bernoulli_logit" else np.inf)
 
 
-def _binary_evalue(odds_ratio, lo, hi, prevalence):
-    """Odds ratio to approximate risk ratio, then E-value.
-
-    For an outcome occurring in at least 15% of the sample the odds ratio
-    overstates the risk ratio, so the square-root approximation is used.
-    """
-    if prevalence >= 0.15:
-        return st.evalue_from_rr(np.sqrt(odds_ratio), np.sqrt(lo), np.sqrt(hi))
-    return st.evalue_from_rr(odds_ratio, lo, hi)
+def _checked(coef, se, var_u, resid_sd, max_abs=np.inf):
+    """A degenerate fit (separation, singular Hessian) stops the run instead of printing a meaningless estimate.
+    max_abs bounds a log-odds coefficient: |log OR| >= 20 is separation, never an estimate."""
+    if not (np.isfinite(coef) and np.isfinite(se) and se > 0 and abs(coef) < max_abs and np.isfinite(var_u)):
+        raise RuntimeError(f"degenerate fit: coefficient {coef}, SE {se}, clinician variance {var_u}")
+    return coef, se, var_u, resid_sd
 
 
-def fit_binary(prepared):
-    """Logistic regression. Weighted and unweighted are the same call."""
-    y, design, w = prepared
-    weights = np.ones(len(y)) if w is None else w
-    result = sm.GLM(y, design, family=sm.families.Binomial(),
-                    var_weights=weights).fit(cov_type=_cov_type(w))
-    return _summary(result)
+def fit_mixedlm(y, X, clinicians):
+    """Random intercept per clinician, statsmodels MixedLM by REML. Same return as fit_gpboost."""
+    model = sm.MixedLM(y, X, groups=clinicians)
+    result = model.fit(reml=True)
+    if not result.converged:
+        result = model.fit(reml=True, method="powell", maxiter=500)
+    if not result.converged:
+        raise RuntimeError("MixedLM did not converge (lbfgs, powell)")
+    return _checked(float(result.params[cfg.EXPOSURE]), float(result.bse[cfg.EXPOSURE]),
+                    float(np.asarray(result.cov_re)[0, 0]), float(np.sqrt(result.scale)))
 
 
-def fit_continuous(prepared):
-    """Linear regression. Weighted and unweighted are the same call."""
-    y, design, w = prepared
-    weights = np.ones(len(y)) if w is None else w
-    result = sm.WLS(y, design, weights=weights).fit(cov_type=_cov_type(w))
-    coef, lo, hi, p = _summary(result)
-    return coef, lo, hi, p, float(result.bse[EXPOSURE])
-
-
-def _binary_row(block, label, sample, prepared, engine, result):
-    y, design, _ = prepared
-    values = sample.loc[design.index, block["metric"]]
-    n1, n0 = int(y.sum()), int(len(y) - y.sum())
-    row = {"Block": block["name"], "Tables": block["tables"],
-           "Predictor": block["metric"], "Sample": block["subgroup"] or "full",
-           "Outcome": label, "Model": engine, "num_patients": len(y),
-           "num_patients (outcome=0)": n0,
-           "% (outcome=0)": f"{100 * n0 / len(y):.1f}",
-           "concordance (outcome=0)": _mean_sd(values[y == 0]),
-           "num_patients (outcome=1)": n1,
-           "% (outcome=1)": f"{100 * n1 / len(y):.1f}",
-           "concordance (outcome=1)": _mean_sd(values[y == 1])}
-    if result is None:
-        row.update({"OR (95% CI)": FAILED, "_p": np.nan,
-                    "E (point)": "NA", "E (CI)": "NA"})
-        return row
-    coef, lo, hi, p = result
-    odds, lo_or, hi_or = np.exp(coef), np.exp(lo), np.exp(hi)
-    e_point, e_ci = _binary_evalue(odds, lo_or, hi_or, n1 / len(y))
-    row.update({"OR (95% CI)": f"{odds:.3f} ({lo_or:.3f} to {hi_or:.3f})",
-                "_p": p,
-                "E (point)": f"{e_point:.2f}" if np.isfinite(e_point) else "NA",
-                "E (CI)": f"{e_ci:.2f}" if np.isfinite(e_ci) else "NA"})
-    return row
-
-
-def _continuous_row(block, label, engine, prepared, result):
-    y, _, _ = prepared
-    row = {"Block": block["name"], "Tables": block["tables"],
-           "Predictor": block["metric"],
-           "Sample": block["subgroup"] or "full", "Outcome": label,
-           "Model": engine, "num_patients": len(y)}
-    if result is None:
-        row.update({"Beta (95% CI)": FAILED, "Beta SE": "NA", "_p": np.nan,
-                    "E (point)": "NA", "E (CI)": "NA"})
-        return row
-    coef, lo, hi, p, se = result
-    e_point, e_ci = st.evalue_from_beta(coef, lo, hi, float(np.std(y, ddof=1)))
-    row.update({"Beta (95% CI)": f"{coef:.2f} ({lo:.2f} to {hi:.2f})",
-                "Beta SE": f"{se:.2f}", "_p": p,
-                "E (point)": f"{e_point:.2f}" if np.isfinite(e_point) else "NA",
-                "E (CI)": f"{e_ci:.2f}" if np.isfinite(e_ci) else "NA"})
+def fit_row(block, model, sample, weights):
+    """One table row: counts, the concordance estimate with 95% CI, raw p, E-value, clinician variance."""
+    y, X = design(sample, model)
+    clinicians = sample.loc[X.index, "clinician_id"].to_numpy()
+    w = None if weights is None else weights.loc[X.index].to_numpy(float)
+    if w is not None:
+        w = w * len(w) / w.sum()          # normalized: the weights of a fit sum to its number of patients
+    n_clin = len(set(clinicians))
+    assert n_clin >= 2, f"{block.name}/{model.name}: {n_clin} clinician(s), a random intercept needs at least 2"
+    row = {"Block": block.name, "Tables": block.tables, "Metric": block.metric, "Domain": model.domain,
+           "Outcome": model.label, "num_patients": len(y), "num_clinicians": n_clin}
+    if model.kind == "binary":
+        n1 = int(y.sum())
+        n0 = len(y) - n1
+        assert min(n0, n1) >= cfg.MIN_EVENTS, f"{block.name}/{model.name}: {n1} events, {n0} non-events"
+        coef, se, var_u, _ = fit_gpboost(y, X, clinicians, "bernoulli_logit", w)
+        lo, hi = coef - 1.96 * se, coef + 1.96 * se
+        odds = np.exp([coef, lo, hi])
+        row.update({"Without outcome, n (%)": f"{n0} ({100 * n0 / len(y):.1f}%)",
+                    "With outcome, n (%)": f"{n1} ({100 * n1 / len(y):.1f}%)",
+                    "OR (95% CI)": st.fmt_ci(*odds),
+                    "E (CI)": st.fmt_e(st.evalue_binary(*odds, n1 / len(y)))})
+    else:
+        if block.weighted:
+            coef, se, var_u, _ = fit_gpboost(y, X, clinicians, "gaussian", w)
+            mean = np.average(y, weights=w)
+            sd = float(np.sqrt(np.average((y - mean) ** 2, weights=w)))
+        else:
+            coef, se, var_u, _ = fit_mixedlm(y, X, clinicians)
+            mean, sd = float(y.mean()), float(y.std())
+        lo, hi = coef - 1.96 * se, coef + 1.96 * se
+        row.update({"Beta (95% CI)": st.fmt_ci(coef, lo, hi),
+                    "Standardized beta (95% CI)": st.fmt_ci(coef / sd, lo / sd, hi / sd),
+                    "Mean (SD)": f"{mean:.2f} ({sd:.2f})", "SE": f"{se:.2f}",
+                    "E (CI)": st.fmt_e(st.evalue_continuous(coef, lo, hi, sd))})
+    row["Clinician intercept SD"] = f"{np.sqrt(var_u):.3f}"
+    row["_p"] = st.wald_p(coef, se)
     return row
 
 
 def run_all_blocks(df, weights):
-    """Fit every block. Returns the binary and continuous result tables."""
-    binary_rows, continuous_rows = [], []
-
+    """Benjamini-Hochberg correction within each block."""
+    tables = {"binary": [], "continuous": []}
     for block in cfg.BLOCKS:
         sample = block_sample(df, block)
-        w = weights.loc[sample.index] if block["weighted"] else None
-        print(f"[block] {block['name']:24s} n={len(sample):5d}  "
-              f"{block['tables']}")
-
-        for outcome, label, _, _, _ in cfg.BINARY_OUTCOMES:
-            prepared = _fit_ready(sample, outcome, block["metric"], w)
-            if prepared is None:
-                print(f"    [skipped] {label}: fewer than {cfg.MIN_FIT_N} "
-                      f"complete rows, so it leaves this block's BH family")
-                continue
-            engine = "Logistic (weighted, HC0)" if block["weighted"] \
-                else "Logistic"
-            binary_rows.append(_binary_row(
-                block, label, sample, prepared, engine,
-                _guard(fit_binary, prepared)))
-
-        for outcome, label in cfg.CONTINUOUS_OUTCOMES:
-            prepared = _fit_ready(sample, outcome, block["metric"], w)
-            if prepared is None:
-                print(f"    [skipped] {label}: fewer than {cfg.MIN_FIT_N} "
-                      f"complete rows, so it leaves this block's BH family")
-                continue
-            engine = "Linear (weighted, HC0)" if block["weighted"] else "Linear"
-            continuous_rows.append(_continuous_row(
-                block, label, engine, prepared,
-                _guard(fit_continuous, prepared)))
-
-    return _finalize(binary_rows, continuous_rows)
-
-
-def _guard(fn, *args):
-    """Run a fit; on a numerical failure record it instead of hiding it."""
-    try:
-        return fn(*args)
-    except (np.linalg.LinAlgError, ValueError, ZeroDivisionError,
-            RuntimeError) as exc:
-        print(f"    [fit failed] {fn.__name__}: {type(exc).__name__}: {exc}")
-        return None
-
-
-def _finalize(binary_rows, continuous_rows):
-    """Benjamini-Hochberg within each block, across both outcome families.
-
-    A block tests one predictor in one sample, so its binary and its
-    continuous regressions form a single family and are corrected together.
-    """
-    rows = binary_rows + continuous_rows
-    if not rows:
-        return pd.DataFrame(), pd.DataFrame()
-    keys = pd.DataFrame({"Block": [r["Block"] for r in rows],
-                         "_p": [r["_p"] for r in rows]})
-    adjusted = np.full(len(rows), np.nan)
-    for _, index in keys.groupby("Block").groups.items():
-        adjusted[index] = st.bh_adjust(keys.loc[index, "_p"])
-    split = len(binary_rows)
-    return (_format_p(pd.DataFrame(binary_rows), adjusted[:split]),
-            _format_p(pd.DataFrame(continuous_rows), adjusted[split:]))
-
-
-def _format_p(table, adjusted):
-    """Swap the raw p column for the formatted corrected and raw columns."""
-    if table.empty:
-        return table
-    raw = table.pop("_p")
-    table["p (BH)"] = [st.fmt_p(v) for v in adjusted]
-    table["p"] = [st.fmt_p(v) for v in raw]
-    return table
+        print(f"[block] {block.name:20s} n={len(sample):5d}  {block.tables}")
+        rows = {"binary": [], "continuous": []}
+        for model in roster(block):
+            try:
+                rows[model.kind].append(fit_row(block, model, sample, weights if block.weighted else None))
+            except Exception as exc:
+                raise RuntimeError(f"fit failed: block {block.name}, outcome {model.name}") from exc
+        block_rows = rows["binary"] + rows["continuous"]
+        for row, q in zip(block_rows, st.bh_adjust([r["_p"] for r in block_rows])):
+            row["p"], row["p (BH)"] = st.fmt_p(row.pop("_p")), st.fmt_p(q)
+        for kind in tables:
+            tables[kind] += rows[kind]
+    return pd.DataFrame(tables["binary"]), pd.DataFrame(tables["continuous"])
 
 
 def main():
     df = derive.load_analytic_table()
-    weights = derive.compute_us_weights(df)
-    binary, continuous = run_all_blocks(df, weights)
-    st.write_table(binary, "table3_binary_regressions.csv")
-    st.write_table(continuous, "table4_continuous_regressions.csv")
+    binary, continuous = run_all_blocks(df, derive.compute_us_weights(df))
+    st.write_table(binary, "table2_binary_regressions.csv")
+    st.write_table(continuous, "table3_continuous_regressions.csv")
 
 
 if __name__ == "__main__":

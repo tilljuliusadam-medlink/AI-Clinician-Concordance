@@ -1,7 +1,5 @@
-"""Shared statistical primitives.
-
-Every table in the package routes its p-values, effect sizes and E-values
-through this module, so each rule is written once.
+"""
+Shared statistical primitives.
 """
 
 import numpy as np
@@ -12,125 +10,107 @@ import config as cfg
 
 
 def fmt_p(value):
-    if value is None or (isinstance(value, float) and np.isnan(value)):
+    if value is None or not np.isfinite(value):
         return "NA"
     return "<0.001" if value < 0.001 else f"{value:.3f}"
 
 
-def phi_ci(table):
-    """Phi coefficient with 95% CI and chi-square p for a 2 x k table.
+def fmt_ci(point, lo, hi, digits=2):
+    return f"{point:.{digits}f} ({lo:.{digits}f}, {hi:.{digits}f})"
 
-    Phi is the Pearson correlation of the two indicator variables, so the
-    confidence interval uses the Fisher z transformation.
-    """
+
+def wald_p(estimate, se):
+    """Two-sided Wald p for estimate = 0."""
+    return float(2 * sps.norm.sf(abs(estimate) / se))
+
+
+def phi_ci(table):
+    """Phi coefficient with 95% CI (Fisher z) and chi-square p for a 2 x 2 table."""
     table = np.asarray(table, float)
-    if table.shape[0] < 2 or table.shape[1] < 2 or table.sum() == 0:
-        return np.nan, np.nan, np.nan, np.nan
     if (table.sum(axis=0) == 0).any() or (table.sum(axis=1) == 0).any():
         return np.nan, np.nan, np.nan, np.nan
     chi2, p, _, _ = sps.chi2_contingency(table, correction=False)
     n = table.sum()
-    phi = float(np.sqrt(chi2 / n))
-    if table.shape == (2, 2):
-        a, b, c, d = table[0, 0], table[0, 1], table[1, 0], table[1, 1]
-        phi *= np.sign(a * d - b * c)
-    if n <= 3:
-        return phi, np.nan, np.nan, float(p)
-    z = np.arctanh(np.clip(phi, -0.999999, 0.999999))
-    se = 1.0 / np.sqrt(n - 3)
-    lo, hi = np.tanh(z - 1.96 * se), np.tanh(z + 1.96 * se)
-    return phi, float(lo), float(hi), float(p)
+    (a, b), (c, d) = table
+    phi = float(np.sqrt(chi2 / n) * np.sign(a * d - b * c))
+    z, se = np.arctanh(np.clip(phi, -0.999999, 0.999999)), 1.0 / np.sqrt(n - 3)
+    return phi, float(np.tanh(z - 1.96 * se)), float(np.tanh(z + 1.96 * se)), float(p)
+
+
+def cohens_d(x, y):
+    """Difference of two means over their pooled SD."""
+    x, y = np.asarray(x, float), np.asarray(y, float)
+    n1, n2 = len(x), len(y)
+    pooled = np.sqrt(((n1 - 1) * x.var(ddof=1) + (n2 - 1) * y.var(ddof=1)) / (n1 + n2 - 2))
+    return float((x.mean() - y.mean()) / pooled)
 
 
 def smd_ci(x, y):
-    """Standardized mean difference with 95% CI and a Welch t-test p-value."""
-    x = np.asarray(x, float)
-    y = np.asarray(y, float)
+    """Standardized mean difference with 95% CI and the Welch t-test p."""
+    x, y = np.asarray(x, float), np.asarray(y, float)
     x, y = x[np.isfinite(x)], y[np.isfinite(y)]
     n1, n2 = len(x), len(y)
-    if n1 < 2 or n2 < 2:
-        return np.nan, np.nan, np.nan, np.nan
-    pooled = np.sqrt(((n1 - 1) * x.var(ddof=1) + (n2 - 1) * y.var(ddof=1))
-                     / (n1 + n2 - 2))
-    if pooled == 0:
-        return np.nan, np.nan, np.nan, np.nan
-    d = (x.mean() - y.mean()) / pooled
+    d = cohens_d(x, y)
     se = np.sqrt((n1 + n2) / (n1 * n2) + d ** 2 / (2 * (n1 + n2)))
-    p = sps.ttest_ind(x, y, equal_var=False).pvalue
-    return float(d), float(d - 1.96 * se), float(d + 1.96 * se), float(p)
+    return d, d - 1.96 * se, d + 1.96 * se, float(sps.ttest_ind(x, y, equal_var=False).pvalue)
 
 
-def welch_or_anova(groups):
-    """Welch t-test for two groups, one-way ANOVA for more than two."""
+def welch_anova_p(groups):
+    """Welch's one-way analysis of variance (unequal variances); with two groups it equals Welch's t-test."""
     groups = [np.asarray(g, float) for g in groups]
     groups = [g[np.isfinite(g)] for g in groups]
-    groups = [g for g in groups if len(g) >= 2]
-    if len(groups) < 2:
+    if len(groups) < 2 or any(len(g) < 2 for g in groups):
         return np.nan
-    if len(groups) == 2:
-        return float(sps.ttest_ind(*groups, equal_var=False).pvalue)
-    return float(sps.f_oneway(*groups).pvalue)
+    n = np.array([len(g) for g in groups], float)
+    mean = np.array([g.mean() for g in groups])
+    var = np.array([g.var(ddof=1) for g in groups])
+    k, w = len(groups), n / var
+    grand = (w * mean).sum() / w.sum()
+    lam = (((1 - w / w.sum()) ** 2) / (n - 1)).sum()
+    f_stat = ((w * (mean - grand) ** 2).sum() / (k - 1)) / (1 + 2 * (k - 2) * lam / (k ** 2 - 1))
+    return float(sps.f.sf(f_stat, k - 1, (k ** 2 - 1) / (3 * lam)))
 
 
-def evalue_from_rr(rr, ci_lo=None, ci_hi=None):
-    """E-value (VanderWeele and Ding 2017) from a risk-ratio scale estimate.
+def evalue_from_rr(rr, lo, hi):
+    """E-value (VanderWeele and Ding 2017) of a risk ratio and of its CI bound nearest the null.
 
-    Returns (E_point, E_ci). The confidence bound nearest the null is used; if
-    the interval crosses the null the bound E-value is 1.
+    The bound E-value is 1 when the interval crosses the null.
     """
-    if rr is None or not np.isfinite(rr) or rr <= 0:
-        return np.nan, np.nan
-
-    def _e(r):
+    def e(r):
         r = max(r, 1.0 / r)
         return r + np.sqrt(r * (r - 1.0))
 
-    e_point = _e(rr)
-    if ci_lo is None or ci_hi is None or not np.isfinite(ci_lo) \
-            or not np.isfinite(ci_hi):
-        return e_point, np.nan
-    if rr >= 1.0:
-        bound = ci_lo
-        if bound <= 1.0:
-            return e_point, 1.0
-    else:
-        bound = ci_hi
-        if bound >= 1.0:
-            return e_point, 1.0
-    return e_point, _e(bound)
+    bound = lo if rr >= 1 else hi
+    crosses = (rr >= 1 and bound <= 1) or (rr < 1 and bound >= 1)
+    return e(rr), 1.0 if crosses else e(bound)
 
 
-def evalue_from_beta(beta, lo, hi, sd_outcome):
-    """E-value for a continuous outcome.
+def evalue_binary(odds_ratio, lo, hi, prevalence):
+    """Conversion of OR to RR scale."""
+    if prevalence >= 0.15:
+        odds_ratio, lo, hi = np.sqrt(odds_ratio), np.sqrt(lo), np.sqrt(hi)
+    return evalue_from_rr(odds_ratio, lo, hi)
 
-    The coefficient is standardized by the outcome's standard deviation and
-    mapped to an approximate risk ratio using VanderWeele and Ding's
-    RR = exp(0.91 * d) transformation, then handed to evalue_from_rr.
-    """
-    if not np.isfinite(sd_outcome) or sd_outcome <= 0:
-        return np.nan, np.nan
+
+def evalue_continuous(beta, lo, hi, sd_outcome):
+    """beta / SD to RR scale."""
     scale = 0.91 / sd_outcome
-    return evalue_from_rr(np.exp(beta * scale),
-                          np.exp(lo * scale), np.exp(hi * scale))
+    return evalue_from_rr(np.exp(beta * scale), np.exp(lo * scale), np.exp(hi * scale))
+
+
+def fmt_e(pair):
+    return f"{pair[0]:.2f} ({pair[1]:.2f})"
 
 
 def bh_adjust(pvalues):
-    """Benjamini-Hochberg FDR correction that tolerates missing p-values."""
-    raw = np.asarray(pvalues, float)
-    out = np.full(len(raw), np.nan)
-    valid = np.isfinite(raw)
-    if valid.any():
-        out[valid] = multipletests(raw[valid], method="fdr_bh")[1]
-    return out
+    """Benjamini-Hochberg correction."""
+    return multipletests(np.asarray(pvalues, float), method="fdr_bh")[1]
 
 
 def write_table(frame, filename, count_col="num_patients"):
-    """Write one table to results/. Every row must report its patient count."""
+    """Write one table to results/. Every row must report how many patients it describes."""
     if count_col not in frame.columns:
-        raise KeyError(f"table has no '{count_col}' column; every exported row "
-                       f"must report how many patients it describes")
+        raise KeyError(f"table has no '{count_col}' column; every exported row must report its patient count")
     cfg.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    path = cfg.RESULTS_DIR / filename
-    frame.to_csv(path, index=False)
+    frame.to_csv(cfg.RESULTS_DIR / filename, index=False, lineterminator="\n")
     print(f"[write] {filename}  ({len(frame)} rows)")
-    return path

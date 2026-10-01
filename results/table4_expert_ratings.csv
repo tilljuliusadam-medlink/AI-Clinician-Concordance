@@ -1,0 +1,11 @@
+Rating,Group,Cases,"Appropriateness rating (0-3), mean (SD)","Not appropriate, n (%)","Not appropriate by both reviewers, n (%)",beta (95% CI),p (linear mixed),Cohen's d,p (Welch),OR (95% CI),p (logistic mixed),p (Fisher's exact)
+Treatment plan,Overall,120,2.28 (0.80),12 (5.0%),0 (0.0%),,,,,,,
+Treatment plan,Low concordance (F1-score<0.5),60,2.25 (0.80),6 (5.0%),0 (0.0%),"-0.07 (-0.28, 0.15)",0.538,-0.08,0.519,"0.82 (0.05, 12.99)",0.890,1.000
+Treatment plan,Medium/High concordance (F1-score>=0.5),60,2.32 (0.80),6 (5.0%),0 (0.0%),,,,,,,
+Treatment plan,Negative outcome,60,2.29 (0.82),7 (5.8%),0 (0.0%),"0.03 (-0.19, 0.24)",0.816,0.02,0.872,"1.42 (0.44, 4.62)",0.556,0.769
+Treatment plan,Non-negative outcome,60,2.27 (0.78),5 (4.2%),0 (0.0%),,,,,,,
+Medication sub-class,Overall,115,2.47 (0.70),6 (2.6%),0 (0.0%),,,,,,,
+Medication sub-class,Low concordance (F1-score<0.5),58,2.47 (0.62),1 (0.9%),0 (0.0%),"-0.03 (-0.22, 0.16)",0.766,-0.02,0.855,"0.48 (0.01, 29.29)",0.725,0.118
+Medication sub-class,Medium/High concordance (F1-score>=0.5),57,2.48 (0.77),5 (4.4%),0 (0.0%),,,,,,,
+Medication sub-class,Negative outcome,57,2.51 (0.61),1 (0.9%),0 (0.0%),"0.05 (-0.13, 0.24)",0.568,0.10,0.453,"0.28 (0.00, 27.97)",0.584,0.213
+Medication sub-class,Non-negative outcome,58,2.44 (0.77),5 (4.3%),0 (0.0%),,,,,,,

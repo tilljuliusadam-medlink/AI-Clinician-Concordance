@@ -1,5 +1,0 @@
-endpoint,stratum,num_patients,model,n_ratings,n_reviewers,probability_prefer_ai,log_odds,se,ci95,vc_case,vc_reviewer,singular_dropped,converged,note
-treatment,discordant_bad_outcome,240,crossed logistic,480,10,0.5105,0.0422,0.0913,0.466 to 0.555,0.0,0.0,reviewer,True,
-treatment,high_concordance_no_bad_outcome,60,crossed logistic,120,10,0.3723,-0.5224,0.2306,0.274 to 0.482,0.0,0.1642,case,True,
-diagnostic,discordant_bad_outcome,240,crossed logistic,480,10,0.5192,0.0767,0.0933,0.473 to 0.565,0.0863,0.0,reviewer,True,
-diagnostic,high_concordance_no_bad_outcome,60,crossed logistic,120,10,0.4667,-0.1335,0.183,0.379 to 0.556,0.0,0.0,"case,reviewer",True,
